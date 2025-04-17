@@ -1,0 +1,151 @@
+2025-04-16 13:55:49,327 - INFO - ================================================================================
+2025-04-16 13:55:49,327 - INFO - NEW TRAINING RUN: raw_audio_lstm on adress dataset with language awareness: False
+2025-04-16 13:55:49,327 - INFO - Parameters: Epochs=10, Batch Size=128, LR=0.003, Weight Decay=1e-05
+2025-04-16 13:55:49,327 - INFO - Continue Training: False, Patience: 3
+2025-04-16 13:55:49,327 - INFO - ================================================================================
+2025-04-16 13:55:49,338 - INFO - Using device: cuda
+
+2025-04-16 13:55:49,338 - INFO - Loading dataset...
+2025-04-16 13:56:20,689 - INFO - Dataset loaded - Train set: 5734, Validation set: 716, Test set: 718
+
+2025-04-16 13:56:20,689 - INFO - Using standard CrossEntropyLoss
+2025-04-16 13:56:20,689 - INFO - Initializing model and optimizer...
+2025-04-16 13:56:20,793 - INFO - No checkpoint found. Starting training from scratch.
+2025-04-16 13:56:20,793 - INFO - Model and optimizer initialized.
+
+2025-04-16 13:56:20,793 - INFO - TrainHandler initialized for model: raw_audio_lstm with language awareness: False
+
+2025-04-16 13:56:20,793 - INFO - Starting model training process
+2025-04-16 13:56:20,793 - INFO - Starting training process for 10 epochs with patience 3
+
+2025-04-16 13:56:20,793 - INFO - === Starting Epoch 1/10 ===
+2025-04-16 13:56:20,793 - INFO - Starting training for epoch 1
+2025-04-16 14:00:29,956 - INFO - Epoch 1 completed - Train Loss: 0.6685, Train Acc: 60.01%
+2025-04-16 14:00:29,956 - INFO - Starting validation for epoch 1
+2025-04-16 14:01:12,771 - INFO - Epoch 1 validation - Val Loss: 0.6615, Val Acc: 62.57%
+
+2025-04-16 14:01:12,772 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/adress
+2025-04-16 14:01:13,006 - INFO - Model checkpoint saved at epoch 1 with validation loss: 0.6615
+
+2025-04-16 14:01:13,006 - INFO - New best model saved at epoch 1 with validation loss: 0.6615
+2025-04-16 14:01:13,006 - INFO - === Completed Epoch 1/10 ===
+
+2025-04-16 14:01:13,006 - INFO - === Starting Epoch 2/10 ===
+2025-04-16 14:01:13,006 - INFO - Starting training for epoch 2
+2025-04-16 14:05:19,338 - INFO - Epoch 2 completed - Train Loss: 0.6581, Train Acc: 61.77%
+2025-04-16 14:05:19,338 - INFO - Starting validation for epoch 2
+2025-04-16 14:06:02,153 - INFO - Epoch 2 validation - Val Loss: 0.6468, Val Acc: 64.39%
+
+2025-04-16 14:06:02,154 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/adress
+2025-04-16 14:06:02,277 - INFO - Model checkpoint saved at epoch 2 with validation loss: 0.6468
+
+2025-04-16 14:06:02,278 - INFO - New best model saved at epoch 2 with validation loss: 0.6468
+2025-04-16 14:06:02,278 - INFO - === Completed Epoch 2/10 ===
+
+2025-04-16 14:06:02,278 - INFO - === Starting Epoch 3/10 ===
+2025-04-16 14:06:02,278 - INFO - Starting training for epoch 3
+2025-04-16 14:10:06,671 - INFO - Epoch 3 completed - Train Loss: 0.6580, Train Acc: 61.70%
+2025-04-16 14:10:06,671 - INFO - Starting validation for epoch 3
+2025-04-16 14:10:49,737 - INFO - Epoch 3 validation - Val Loss: 0.6433, Val Acc: 64.66%
+
+2025-04-16 14:10:49,738 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/adress
+2025-04-16 14:10:49,909 - INFO - Model checkpoint saved at epoch 3 with validation loss: 0.6433
+
+2025-04-16 14:10:49,909 - INFO - New best model saved at epoch 3 with validation loss: 0.6433
+2025-04-16 14:10:49,909 - INFO - === Completed Epoch 3/10 ===
+
+2025-04-16 14:10:49,909 - INFO - === Starting Epoch 4/10 ===
+2025-04-16 14:10:49,909 - INFO - Starting training for epoch 4
+2025-04-16 14:14:54,757 - INFO - Epoch 4 completed - Train Loss: 0.6570, Train Acc: 62.61%
+2025-04-16 14:14:54,758 - INFO - Starting validation for epoch 4
+2025-04-16 14:15:37,425 - INFO - Epoch 4 validation - Val Loss: 0.6424, Val Acc: 63.97%
+
+2025-04-16 14:15:37,425 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/adress
+2025-04-16 14:15:37,537 - INFO - Model checkpoint saved at epoch 4 with validation loss: 0.6424
+
+2025-04-16 14:15:37,537 - INFO - New best model saved at epoch 4 with validation loss: 0.6424
+2025-04-16 14:15:37,537 - INFO - === Completed Epoch 4/10 ===
+
+2025-04-16 14:15:37,537 - INFO - === Starting Epoch 5/10 ===
+2025-04-16 14:15:37,537 - INFO - Starting training for epoch 5
+2025-04-16 14:19:39,028 - INFO - Epoch 5 completed - Train Loss: 0.6529, Train Acc: 62.26%
+2025-04-16 14:19:39,028 - INFO - Starting validation for epoch 5
+2025-04-16 14:20:21,757 - INFO - Epoch 5 validation - Val Loss: 0.6448, Val Acc: 65.08%
+
+2025-04-16 14:20:21,757 - INFO - No improvement for 1 epochs. Best val loss: 0.6424 at epoch 4
+2025-04-16 14:20:21,757 - INFO - === Completed Epoch 5/10 ===
+
+2025-04-16 14:20:21,757 - INFO - === Starting Epoch 6/10 ===
+2025-04-16 14:20:21,757 - INFO - Starting training for epoch 6
+2025-04-16 14:24:31,559 - INFO - Epoch 6 completed - Train Loss: 0.6497, Train Acc: 62.07%
+2025-04-16 14:24:31,559 - INFO - Starting validation for epoch 6
+2025-04-16 14:25:14,237 - INFO - Epoch 6 validation - Val Loss: 0.6402, Val Acc: 62.01%
+
+2025-04-16 14:25:14,237 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/adress
+2025-04-16 14:25:14,353 - INFO - Model checkpoint saved at epoch 6 with validation loss: 0.6402
+
+2025-04-16 14:25:14,353 - INFO - New best model saved at epoch 6 with validation loss: 0.6402
+2025-04-16 14:25:14,353 - INFO - === Completed Epoch 6/10 ===
+
+2025-04-16 14:25:14,353 - INFO - === Starting Epoch 7/10 ===
+2025-04-16 14:25:14,353 - INFO - Starting training for epoch 7
+2025-04-16 14:29:23,737 - INFO - Epoch 7 completed - Train Loss: 0.6464, Train Acc: 62.42%
+2025-04-16 14:29:23,737 - INFO - Starting validation for epoch 7
+2025-04-16 14:30:06,562 - INFO - Epoch 7 validation - Val Loss: 0.6321, Val Acc: 65.64%
+
+2025-04-16 14:30:06,563 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/adress
+2025-04-16 14:30:06,673 - INFO - Model checkpoint saved at epoch 7 with validation loss: 0.6321
+
+2025-04-16 14:30:06,673 - INFO - New best model saved at epoch 7 with validation loss: 0.6321
+2025-04-16 14:30:06,673 - INFO - === Completed Epoch 7/10 ===
+
+2025-04-16 14:30:06,673 - INFO - === Starting Epoch 8/10 ===
+2025-04-16 14:30:06,673 - INFO - Starting training for epoch 8
+2025-04-16 14:34:08,954 - INFO - Epoch 8 completed - Train Loss: 0.6391, Train Acc: 63.45%
+2025-04-16 14:34:08,954 - INFO - Starting validation for epoch 8
+2025-04-16 14:34:51,569 - INFO - Epoch 8 validation - Val Loss: 0.6770, Val Acc: 62.15%
+
+2025-04-16 14:34:51,569 - INFO - No improvement for 1 epochs. Best val loss: 0.6321 at epoch 7
+2025-04-16 14:34:51,569 - INFO - === Completed Epoch 8/10 ===
+
+2025-04-16 14:34:51,569 - INFO - === Starting Epoch 9/10 ===
+2025-04-16 14:34:51,569 - INFO - Starting training for epoch 9
+2025-04-16 14:38:52,645 - INFO - Epoch 9 completed - Train Loss: 0.6304, Train Acc: 64.70%
+2025-04-16 14:38:52,645 - INFO - Starting validation for epoch 9
+2025-04-16 14:39:34,646 - INFO - Epoch 9 validation - Val Loss: 0.6586, Val Acc: 64.39%
+
+2025-04-16 14:39:34,646 - INFO - No improvement for 2 epochs. Best val loss: 0.6321 at epoch 7
+2025-04-16 14:39:34,646 - INFO - === Completed Epoch 9/10 ===
+
+2025-04-16 14:39:34,646 - INFO - === Starting Epoch 10/10 ===
+2025-04-16 14:39:34,646 - INFO - Starting training for epoch 10
+2025-04-16 14:43:38,789 - INFO - Epoch 10 completed - Train Loss: 0.6163, Train Acc: 66.79%
+2025-04-16 14:43:38,789 - INFO - Starting validation for epoch 10
+2025-04-16 14:44:20,906 - INFO - Epoch 10 validation - Val Loss: 0.7024, Val Acc: 59.08%
+
+2025-04-16 14:44:20,906 - INFO - Learning rate adjusted from 0.003 to 0.0015
+2025-04-16 14:44:20,906 - INFO - No improvement for 3 epochs. Best val loss: 0.6321 at epoch 7
+2025-04-16 14:44:20,906 - INFO - Early stopping triggered after 10 epochs
+
+2025-04-16 14:44:20,906 - INFO - Training completed. Best validation loss: 0.6321 at epoch 7
+
+2025-04-16 14:44:20,906 - INFO - Training completed. Starting model evaluation
+2025-04-16 14:44:20,906 - INFO - Starting model evaluation on test set
+2025-04-16 14:45:02,655 - INFO - Test Evaluation Results:
+2025-04-16 14:45:02,655 - INFO - Test Accuracy: 56.27%
+2025-04-16 14:45:02,656 - INFO - Precision: 0.4834
+2025-04-16 14:45:02,656 - INFO - Recall: 0.7291
+2025-04-16 14:45:02,656 - INFO - F1 Score: 0.5813
+2025-04-16 14:45:02,656 - INFO - Generating confusion matrix
+2025-04-16 14:45:02,755 - INFO - Confusion matrix saved to ../models/raw_audio_lstm/adress/confusion_matrix.png
+2025-04-16 14:45:02,755 - INFO - Generating training history plots
+2025-04-16 14:45:02,957 - INFO - Training history plots saved to ../models/raw_audio_lstm/adress/training_history.png
+2025-04-16 14:45:02,957 - INFO - ================================================================================
+2025-04-16 14:45:02,957 - INFO - TRAINING SUMMARY:
+2025-04-16 14:45:02,957 - INFO - Model: raw_audio_lstm on adress dataset
+2025-04-16 14:45:02,957 - INFO - Best validation loss: 0.6321 achieved at epoch 7
+2025-04-16 14:45:02,957 - INFO - Final training accuracy: 66.79%
+2025-04-16 14:45:02,957 - INFO - Final validation accuracy: 59.08%
+2025-04-16 14:45:02,957 - INFO - Model saved at: ../models/raw_audio_lstm/adress
+2025-04-16 14:45:02,957 - INFO - Training completed successfully
+2025-04-16 14:45:02,957 - INFO - ================================================================================

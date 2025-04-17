@@ -1,0 +1,150 @@
+2025-04-16 13:54:15,519 - INFO - ================================================================================
+2025-04-16 13:54:15,519 - INFO - NEW TRAINING RUN: raw_audio_lstm on ncmmsc dataset with language awareness: False
+2025-04-16 13:54:15,519 - INFO - Parameters: Epochs=10, Batch Size=128, LR=0.003, Weight Decay=1e-05
+2025-04-16 13:54:15,519 - INFO - Continue Training: False, Patience: 3
+2025-04-16 13:54:15,519 - INFO - ================================================================================
+2025-04-16 13:54:15,530 - INFO - Using device: cuda
+
+2025-04-16 13:54:15,530 - INFO - Loading dataset...
+2025-04-16 13:54:17,085 - INFO - Dataset loaded - Train set: 4633, Validation set: 579, Test set: 580
+
+2025-04-16 13:54:17,086 - INFO - Using standard CrossEntropyLoss
+2025-04-16 13:54:17,086 - INFO - Initializing model and optimizer...
+2025-04-16 13:54:17,196 - INFO - No checkpoint found. Starting training from scratch.
+2025-04-16 13:54:17,196 - INFO - Model and optimizer initialized.
+
+2025-04-16 13:54:17,196 - INFO - TrainHandler initialized for model: raw_audio_lstm with language awareness: False
+
+2025-04-16 13:54:17,196 - INFO - Starting model training process
+2025-04-16 13:54:17,196 - INFO - Starting training process for 10 epochs with patience 3
+
+2025-04-16 13:54:17,196 - INFO - === Starting Epoch 1/10 ===
+2025-04-16 13:54:17,196 - INFO - Starting training for epoch 1
+2025-04-16 13:54:22,733 - INFO - Epoch 1 completed - Train Loss: 0.5380, Train Acc: 74.62%
+2025-04-16 13:54:22,734 - INFO - Starting validation for epoch 1
+2025-04-16 13:54:23,836 - INFO - Epoch 1 validation - Val Loss: 0.7090, Val Acc: 51.47%
+
+2025-04-16 13:54:23,836 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/ncmmsc
+2025-04-16 13:54:23,908 - INFO - Model checkpoint saved at epoch 1 with validation loss: 0.7090
+
+2025-04-16 13:54:23,908 - INFO - New best model saved at epoch 1 with validation loss: 0.7090
+2025-04-16 13:54:23,908 - INFO - === Completed Epoch 1/10 ===
+
+2025-04-16 13:54:23,908 - INFO - === Starting Epoch 2/10 ===
+2025-04-16 13:54:23,908 - INFO - Starting training for epoch 2
+2025-04-16 13:54:29,228 - INFO - Epoch 2 completed - Train Loss: 0.4844, Train Acc: 77.94%
+2025-04-16 13:54:29,228 - INFO - Starting validation for epoch 2
+2025-04-16 13:54:30,239 - INFO - Epoch 2 validation - Val Loss: 0.4559, Val Acc: 80.31%
+
+2025-04-16 13:54:30,239 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/ncmmsc
+2025-04-16 13:54:30,420 - INFO - Model checkpoint saved at epoch 2 with validation loss: 0.4559
+
+2025-04-16 13:54:30,420 - INFO - New best model saved at epoch 2 with validation loss: 0.4559
+2025-04-16 13:54:30,420 - INFO - === Completed Epoch 2/10 ===
+
+2025-04-16 13:54:30,420 - INFO - === Starting Epoch 3/10 ===
+2025-04-16 13:54:30,420 - INFO - Starting training for epoch 3
+2025-04-16 13:54:35,943 - INFO - Epoch 3 completed - Train Loss: 0.4465, Train Acc: 80.81%
+2025-04-16 13:54:35,943 - INFO - Starting validation for epoch 3
+2025-04-16 13:54:36,977 - INFO - Epoch 3 validation - Val Loss: 0.3442, Val Acc: 86.36%
+
+2025-04-16 13:54:36,977 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/ncmmsc
+2025-04-16 13:54:37,048 - INFO - Model checkpoint saved at epoch 3 with validation loss: 0.3442
+
+2025-04-16 13:54:37,048 - INFO - New best model saved at epoch 3 with validation loss: 0.3442
+2025-04-16 13:54:37,048 - INFO - === Completed Epoch 3/10 ===
+
+2025-04-16 13:54:37,048 - INFO - === Starting Epoch 4/10 ===
+2025-04-16 13:54:37,048 - INFO - Starting training for epoch 4
+2025-04-16 13:54:42,378 - INFO - Epoch 4 completed - Train Loss: 0.3699, Train Acc: 84.78%
+2025-04-16 13:54:42,378 - INFO - Starting validation for epoch 4
+2025-04-16 13:54:43,386 - INFO - Epoch 4 validation - Val Loss: 0.3299, Val Acc: 85.32%
+
+2025-04-16 13:54:43,387 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/ncmmsc
+2025-04-16 13:54:43,492 - INFO - Model checkpoint saved at epoch 4 with validation loss: 0.3299
+
+2025-04-16 13:54:43,492 - INFO - New best model saved at epoch 4 with validation loss: 0.3299
+2025-04-16 13:54:43,492 - INFO - === Completed Epoch 4/10 ===
+
+2025-04-16 13:54:43,492 - INFO - === Starting Epoch 5/10 ===
+2025-04-16 13:54:43,492 - INFO - Starting training for epoch 5
+2025-04-16 13:54:48,812 - INFO - Epoch 5 completed - Train Loss: 0.3068, Train Acc: 87.11%
+2025-04-16 13:54:48,812 - INFO - Starting validation for epoch 5
+2025-04-16 13:54:49,813 - INFO - Epoch 5 validation - Val Loss: 0.3885, Val Acc: 79.62%
+
+2025-04-16 13:54:49,814 - INFO - No improvement for 1 epochs. Best val loss: 0.3299 at epoch 4
+2025-04-16 13:54:49,814 - INFO - === Completed Epoch 5/10 ===
+
+2025-04-16 13:54:49,814 - INFO - === Starting Epoch 6/10 ===
+2025-04-16 13:54:49,814 - INFO - Starting training for epoch 6
+2025-04-16 13:54:55,235 - INFO - Epoch 6 completed - Train Loss: 0.3516, Train Acc: 84.72%
+2025-04-16 13:54:55,235 - INFO - Starting validation for epoch 6
+2025-04-16 13:54:56,249 - INFO - Epoch 6 validation - Val Loss: 0.3472, Val Acc: 84.97%
+
+2025-04-16 13:54:56,249 - INFO - No improvement for 2 epochs. Best val loss: 0.3299 at epoch 4
+2025-04-16 13:54:56,249 - INFO - === Completed Epoch 6/10 ===
+
+2025-04-16 13:54:56,249 - INFO - === Starting Epoch 7/10 ===
+2025-04-16 13:54:56,249 - INFO - Starting training for epoch 7
+2025-04-16 13:55:01,737 - INFO - Epoch 7 completed - Train Loss: 0.2653, Train Acc: 89.34%
+2025-04-16 13:55:01,737 - INFO - Starting validation for epoch 7
+2025-04-16 13:55:02,739 - INFO - Epoch 7 validation - Val Loss: 0.2342, Val Acc: 91.54%
+
+2025-04-16 13:55:02,739 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/ncmmsc
+2025-04-16 13:55:02,811 - INFO - Model checkpoint saved at epoch 7 with validation loss: 0.2342
+
+2025-04-16 13:55:02,811 - INFO - New best model saved at epoch 7 with validation loss: 0.2342
+2025-04-16 13:55:02,811 - INFO - === Completed Epoch 7/10 ===
+
+2025-04-16 13:55:02,811 - INFO - === Starting Epoch 8/10 ===
+2025-04-16 13:55:02,811 - INFO - Starting training for epoch 8
+2025-04-16 13:55:08,269 - INFO - Epoch 8 completed - Train Loss: 0.2210, Train Acc: 91.39%
+2025-04-16 13:55:08,269 - INFO - Starting validation for epoch 8
+2025-04-16 13:55:09,293 - INFO - Epoch 8 validation - Val Loss: 0.2415, Val Acc: 91.19%
+
+2025-04-16 13:55:09,293 - INFO - No improvement for 1 epochs. Best val loss: 0.2342 at epoch 7
+2025-04-16 13:55:09,293 - INFO - === Completed Epoch 8/10 ===
+
+2025-04-16 13:55:09,293 - INFO - === Starting Epoch 9/10 ===
+2025-04-16 13:55:09,293 - INFO - Starting training for epoch 9
+2025-04-16 13:55:14,692 - INFO - Epoch 9 completed - Train Loss: 0.2062, Train Acc: 91.73%
+2025-04-16 13:55:14,692 - INFO - Starting validation for epoch 9
+2025-04-16 13:55:15,724 - INFO - Epoch 9 validation - Val Loss: 0.2938, Val Acc: 86.87%
+
+2025-04-16 13:55:15,724 - INFO - No improvement for 2 epochs. Best val loss: 0.2342 at epoch 7
+2025-04-16 13:55:15,724 - INFO - === Completed Epoch 9/10 ===
+
+2025-04-16 13:55:15,724 - INFO - === Starting Epoch 10/10 ===
+2025-04-16 13:55:15,724 - INFO - Starting training for epoch 10
+2025-04-16 13:55:21,145 - INFO - Epoch 10 completed - Train Loss: 0.1810, Train Acc: 92.94%
+2025-04-16 13:55:21,146 - INFO - Starting validation for epoch 10
+2025-04-16 13:55:22,189 - INFO - Epoch 10 validation - Val Loss: 0.1277, Val Acc: 95.68%
+
+2025-04-16 13:55:22,189 - INFO - Saving model and training statistics to ../models/raw_audio_lstm/ncmmsc
+2025-04-16 13:55:22,304 - INFO - Model checkpoint saved at epoch 10 with validation loss: 0.1277
+
+2025-04-16 13:55:22,304 - INFO - New best model saved at epoch 10 with validation loss: 0.1277
+2025-04-16 13:55:22,304 - INFO - === Completed Epoch 10/10 ===
+
+2025-04-16 13:55:22,304 - INFO - Training completed. Best validation loss: 0.1277 at epoch 10
+
+2025-04-16 13:55:22,304 - INFO - Training completed. Starting model evaluation
+2025-04-16 13:55:22,304 - INFO - Starting model evaluation on test set
+2025-04-16 13:55:23,354 - INFO - Test Evaluation Results:
+2025-04-16 13:55:23,354 - INFO - Test Accuracy: 93.62%
+2025-04-16 13:55:23,354 - INFO - Precision: 0.8908
+2025-04-16 13:55:23,354 - INFO - Recall: 0.9444
+2025-04-16 13:55:23,354 - INFO - F1 Score: 0.9169
+2025-04-16 13:55:23,354 - INFO - Generating confusion matrix
+2025-04-16 13:55:23,455 - INFO - Confusion matrix saved to ../models/raw_audio_lstm/ncmmsc/confusion_matrix.png
+2025-04-16 13:55:23,455 - INFO - Generating training history plots
+2025-04-16 13:55:23,658 - INFO - Training history plots saved to ../models/raw_audio_lstm/ncmmsc/training_history.png
+2025-04-16 13:55:23,658 - INFO - ================================================================================
+2025-04-16 13:55:23,658 - INFO - TRAINING SUMMARY:
+2025-04-16 13:55:23,658 - INFO - Model: raw_audio_lstm on ncmmsc dataset
+2025-04-16 13:55:23,658 - INFO - Best validation loss: 0.1277 achieved at epoch 10
+2025-04-16 13:55:23,658 - INFO - Final training accuracy: 92.94%
+2025-04-16 13:55:23,658 - INFO - Final validation accuracy: 95.68%
+2025-04-16 13:55:23,658 - INFO - Model saved at: ../models/raw_audio_lstm/ncmmsc
+2025-04-16 13:55:23,658 - INFO - Training completed successfully
+2025-04-16 13:55:23,658 - INFO - ================================================================================

@@ -1,0 +1,342 @@
+2025-04-16 07:40:20,473 - INFO - ================================================================================
+2025-04-16 07:40:20,473 - INFO - NEW TRAINING RUN: spec_cnn on adress_spec dataset with language awareness: False
+2025-04-16 07:40:20,473 - INFO - Parameters: Epochs=30, Batch Size=8, LR=0.003, Weight Decay=1e-05
+2025-04-16 07:40:20,473 - INFO - Continue Training: False, Patience: 10
+2025-04-16 07:40:20,473 - INFO - ================================================================================
+2025-04-16 07:40:20,484 - INFO - Using device: cuda
+
+2025-04-16 07:40:20,484 - INFO - Loading dataset...
+2025-04-16 07:40:20,498 - INFO - Dataset loaded - Train set: 189, Validation set: 23, Test set: 25
+
+2025-04-16 07:40:20,498 - INFO - Using standard CrossEntropyLoss
+2025-04-16 07:40:20,498 - INFO - Initializing model and optimizer...
+2025-04-16 07:40:20,640 - INFO - No checkpoint found. Starting training from scratch.
+2025-04-16 07:40:20,641 - INFO - Model and optimizer initialized.
+
+2025-04-16 07:40:20,641 - INFO - TrainHandler initialized for model: spec_cnn with language awareness: False
+
+2025-04-16 07:40:20,641 - INFO - Starting model training process
+2025-04-16 07:40:20,641 - INFO - Starting training process for 30 epochs with patience 10
+
+2025-04-16 07:40:20,641 - INFO - === Starting Epoch 1/30 ===
+2025-04-16 07:40:20,641 - INFO - Starting training for epoch 1
+2025-04-16 07:40:22,132 - INFO - Epoch 1 completed - Train Loss: 0.7044, Train Acc: 48.68%
+2025-04-16 07:40:22,132 - INFO - Starting validation for epoch 1
+2025-04-16 07:40:22,446 - INFO - Epoch 1 validation - Val Loss: 0.7113, Val Acc: 43.48%
+
+2025-04-16 07:40:22,447 - INFO - Saving model and training statistics to ../models/spec_cnn/adress_spec
+2025-04-16 07:40:22,463 - INFO - Model checkpoint saved at epoch 1 with validation loss: 0.7113
+
+2025-04-16 07:40:22,463 - INFO - New best model saved at epoch 1 with validation loss: 0.7113
+2025-04-16 07:40:22,463 - INFO - === Completed Epoch 1/30 ===
+
+2025-04-16 07:40:22,463 - INFO - === Starting Epoch 2/30 ===
+2025-04-16 07:40:22,463 - INFO - Starting training for epoch 2
+2025-04-16 07:40:23,355 - INFO - Epoch 2 completed - Train Loss: 0.6992, Train Acc: 43.92%
+2025-04-16 07:40:23,356 - INFO - Starting validation for epoch 2
+2025-04-16 07:40:23,646 - INFO - Epoch 2 validation - Val Loss: 0.6993, Val Acc: 43.48%
+
+2025-04-16 07:40:23,647 - INFO - Saving model and training statistics to ../models/spec_cnn/adress_spec
+2025-04-16 07:40:23,663 - INFO - Model checkpoint saved at epoch 2 with validation loss: 0.6993
+
+2025-04-16 07:40:23,663 - INFO - New best model saved at epoch 2 with validation loss: 0.6993
+2025-04-16 07:40:23,663 - INFO - === Completed Epoch 2/30 ===
+
+2025-04-16 07:40:23,663 - INFO - === Starting Epoch 3/30 ===
+2025-04-16 07:40:23,663 - INFO - Starting training for epoch 3
+2025-04-16 07:40:24,533 - INFO - Epoch 3 completed - Train Loss: 0.6960, Train Acc: 44.97%
+2025-04-16 07:40:24,533 - INFO - Starting validation for epoch 3
+2025-04-16 07:40:24,825 - INFO - Epoch 3 validation - Val Loss: 0.6964, Val Acc: 39.13%
+
+2025-04-16 07:40:24,825 - INFO - Saving model and training statistics to ../models/spec_cnn/adress_spec
+2025-04-16 07:40:24,842 - INFO - Model checkpoint saved at epoch 3 with validation loss: 0.6964
+
+2025-04-16 07:40:24,842 - INFO - New best model saved at epoch 3 with validation loss: 0.6964
+2025-04-16 07:40:24,842 - INFO - === Completed Epoch 3/30 ===
+
+2025-04-16 07:40:24,842 - INFO - === Starting Epoch 4/30 ===
+2025-04-16 07:40:24,842 - INFO - Starting training for epoch 4
+2025-04-16 07:40:25,728 - INFO - Epoch 4 completed - Train Loss: 0.6920, Train Acc: 50.26%
+2025-04-16 07:40:25,728 - INFO - Starting validation for epoch 4
+2025-04-16 07:40:26,044 - INFO - Epoch 4 validation - Val Loss: 0.6958, Val Acc: 43.48%
+
+2025-04-16 07:40:26,044 - INFO - Saving model and training statistics to ../models/spec_cnn/adress_spec
+2025-04-16 07:40:26,061 - INFO - Model checkpoint saved at epoch 4 with validation loss: 0.6958
+
+2025-04-16 07:40:26,061 - INFO - New best model saved at epoch 4 with validation loss: 0.6958
+2025-04-16 07:40:26,061 - INFO - === Completed Epoch 4/30 ===
+
+2025-04-16 07:40:26,061 - INFO - === Starting Epoch 5/30 ===
+2025-04-16 07:40:26,061 - INFO - Starting training for epoch 5
+2025-04-16 07:40:26,954 - INFO - Epoch 5 completed - Train Loss: 0.6932, Train Acc: 52.38%
+2025-04-16 07:40:26,954 - INFO - Starting validation for epoch 5
+2025-04-16 07:40:27,236 - INFO - Epoch 5 validation - Val Loss: 0.7194, Val Acc: 43.48%
+
+2025-04-16 07:40:27,236 - INFO - No improvement for 1 epochs. Best val loss: 0.6958 at epoch 4
+2025-04-16 07:40:27,236 - INFO - === Completed Epoch 5/30 ===
+
+2025-04-16 07:40:27,236 - INFO - === Starting Epoch 6/30 ===
+2025-04-16 07:40:27,236 - INFO - Starting training for epoch 6
+2025-04-16 07:40:28,131 - INFO - Epoch 6 completed - Train Loss: 0.6923, Train Acc: 50.79%
+2025-04-16 07:40:28,131 - INFO - Starting validation for epoch 6
+2025-04-16 07:40:28,429 - INFO - Epoch 6 validation - Val Loss: 0.6945, Val Acc: 47.83%
+
+2025-04-16 07:40:28,429 - INFO - Saving model and training statistics to ../models/spec_cnn/adress_spec
+2025-04-16 07:40:28,446 - INFO - Model checkpoint saved at epoch 6 with validation loss: 0.6945
+
+2025-04-16 07:40:28,446 - INFO - New best model saved at epoch 6 with validation loss: 0.6945
+2025-04-16 07:40:28,446 - INFO - === Completed Epoch 6/30 ===
+
+2025-04-16 07:40:28,446 - INFO - === Starting Epoch 7/30 ===
+2025-04-16 07:40:28,446 - INFO - Starting training for epoch 7
+2025-04-16 07:40:29,363 - INFO - Epoch 7 completed - Train Loss: 0.6928, Train Acc: 51.85%
+2025-04-16 07:40:29,363 - INFO - Starting validation for epoch 7
+2025-04-16 07:40:29,648 - INFO - Epoch 7 validation - Val Loss: 0.6990, Val Acc: 43.48%
+
+2025-04-16 07:40:29,648 - INFO - No improvement for 1 epochs. Best val loss: 0.6945 at epoch 6
+2025-04-16 07:40:29,648 - INFO - === Completed Epoch 7/30 ===
+
+2025-04-16 07:40:29,648 - INFO - === Starting Epoch 8/30 ===
+2025-04-16 07:40:29,648 - INFO - Starting training for epoch 8
+2025-04-16 07:40:30,534 - INFO - Epoch 8 completed - Train Loss: 0.6911, Train Acc: 52.38%
+2025-04-16 07:40:30,535 - INFO - Starting validation for epoch 8
+2025-04-16 07:40:30,829 - INFO - Epoch 8 validation - Val Loss: 0.6997, Val Acc: 52.17%
+
+2025-04-16 07:40:30,830 - INFO - No improvement for 2 epochs. Best val loss: 0.6945 at epoch 6
+2025-04-16 07:40:30,830 - INFO - === Completed Epoch 8/30 ===
+
+2025-04-16 07:40:30,830 - INFO - === Starting Epoch 9/30 ===
+2025-04-16 07:40:30,830 - INFO - Starting training for epoch 9
+2025-04-16 07:40:31,728 - INFO - Epoch 9 completed - Train Loss: 0.6849, Train Acc: 56.08%
+2025-04-16 07:40:31,728 - INFO - Starting validation for epoch 9
+2025-04-16 07:40:32,027 - INFO - Epoch 9 validation - Val Loss: 0.7069, Val Acc: 43.48%
+
+2025-04-16 07:40:32,027 - INFO - Learning rate adjusted from 0.003 to 0.0015
+2025-04-16 07:40:32,027 - INFO - No improvement for 3 epochs. Best val loss: 0.6945 at epoch 6
+2025-04-16 07:40:32,027 - INFO - === Completed Epoch 9/30 ===
+
+2025-04-16 07:40:32,027 - INFO - === Starting Epoch 10/30 ===
+2025-04-16 07:40:32,028 - INFO - Starting training for epoch 10
+2025-04-16 07:40:32,927 - INFO - Epoch 10 completed - Train Loss: 0.6756, Train Acc: 59.26%
+2025-04-16 07:40:32,927 - INFO - Starting validation for epoch 10
+2025-04-16 07:40:33,241 - INFO - Epoch 10 validation - Val Loss: 0.6455, Val Acc: 65.22%
+
+2025-04-16 07:40:33,242 - INFO - Saving model and training statistics to ../models/spec_cnn/adress_spec
+2025-04-16 07:40:33,258 - INFO - Model checkpoint saved at epoch 10 with validation loss: 0.6455
+
+2025-04-16 07:40:33,258 - INFO - New best model saved at epoch 10 with validation loss: 0.6455
+2025-04-16 07:40:33,258 - INFO - === Completed Epoch 10/30 ===
+
+2025-04-16 07:40:33,258 - INFO - === Starting Epoch 11/30 ===
+2025-04-16 07:40:33,258 - INFO - Starting training for epoch 11
+2025-04-16 07:40:34,170 - INFO - Epoch 11 completed - Train Loss: 0.6723, Train Acc: 54.50%
+2025-04-16 07:40:34,170 - INFO - Starting validation for epoch 11
+2025-04-16 07:40:34,447 - INFO - Epoch 11 validation - Val Loss: 0.6077, Val Acc: 69.57%
+
+2025-04-16 07:40:34,448 - INFO - Saving model and training statistics to ../models/spec_cnn/adress_spec
+2025-04-16 07:40:34,472 - INFO - Model checkpoint saved at epoch 11 with validation loss: 0.6077
+
+2025-04-16 07:40:34,472 - INFO - New best model saved at epoch 11 with validation loss: 0.6077
+2025-04-16 07:40:34,472 - INFO - === Completed Epoch 11/30 ===
+
+2025-04-16 07:40:34,472 - INFO - === Starting Epoch 12/30 ===
+2025-04-16 07:40:34,472 - INFO - Starting training for epoch 12
+2025-04-16 07:40:35,378 - INFO - Epoch 12 completed - Train Loss: 0.6834, Train Acc: 58.20%
+2025-04-16 07:40:35,378 - INFO - Starting validation for epoch 12
+2025-04-16 07:40:35,675 - INFO - Epoch 12 validation - Val Loss: 0.7270, Val Acc: 43.48%
+
+2025-04-16 07:40:35,675 - INFO - No improvement for 1 epochs. Best val loss: 0.6077 at epoch 11
+2025-04-16 07:40:35,675 - INFO - === Completed Epoch 12/30 ===
+
+2025-04-16 07:40:35,675 - INFO - === Starting Epoch 13/30 ===
+2025-04-16 07:40:35,675 - INFO - Starting training for epoch 13
+2025-04-16 07:40:36,583 - INFO - Epoch 13 completed - Train Loss: 0.6569, Train Acc: 58.73%
+2025-04-16 07:40:36,583 - INFO - Starting validation for epoch 13
+2025-04-16 07:40:36,872 - INFO - Epoch 13 validation - Val Loss: 0.6333, Val Acc: 65.22%
+
+2025-04-16 07:40:36,872 - INFO - No improvement for 2 epochs. Best val loss: 0.6077 at epoch 11
+2025-04-16 07:40:36,872 - INFO - === Completed Epoch 13/30 ===
+
+2025-04-16 07:40:36,872 - INFO - === Starting Epoch 14/30 ===
+2025-04-16 07:40:36,872 - INFO - Starting training for epoch 14
+2025-04-16 07:40:37,745 - INFO - Epoch 14 completed - Train Loss: 0.6622, Train Acc: 60.85%
+2025-04-16 07:40:37,745 - INFO - Starting validation for epoch 14
+2025-04-16 07:40:38,046 - INFO - Epoch 14 validation - Val Loss: 0.6350, Val Acc: 73.91%
+
+2025-04-16 07:40:38,046 - INFO - Learning rate adjusted from 0.0015 to 0.00075
+2025-04-16 07:40:38,046 - INFO - No improvement for 3 epochs. Best val loss: 0.6077 at epoch 11
+2025-04-16 07:40:38,046 - INFO - === Completed Epoch 14/30 ===
+
+2025-04-16 07:40:38,046 - INFO - === Starting Epoch 15/30 ===
+2025-04-16 07:40:38,047 - INFO - Starting training for epoch 15
+2025-04-16 07:40:38,932 - INFO - Epoch 15 completed - Train Loss: 0.6688, Train Acc: 56.61%
+2025-04-16 07:40:38,933 - INFO - Starting validation for epoch 15
+2025-04-16 07:40:39,228 - INFO - Epoch 15 validation - Val Loss: 0.6415, Val Acc: 65.22%
+
+2025-04-16 07:40:39,228 - INFO - No improvement for 4 epochs. Best val loss: 0.6077 at epoch 11
+2025-04-16 07:40:39,228 - INFO - === Completed Epoch 15/30 ===
+
+2025-04-16 07:40:39,228 - INFO - === Starting Epoch 16/30 ===
+2025-04-16 07:40:39,228 - INFO - Starting training for epoch 16
+2025-04-16 07:40:40,108 - INFO - Epoch 16 completed - Train Loss: 0.6630, Train Acc: 58.20%
+2025-04-16 07:40:40,108 - INFO - Starting validation for epoch 16
+2025-04-16 07:40:40,394 - INFO - Epoch 16 validation - Val Loss: 0.6581, Val Acc: 52.17%
+
+2025-04-16 07:40:40,394 - INFO - No improvement for 5 epochs. Best val loss: 0.6077 at epoch 11
+2025-04-16 07:40:40,394 - INFO - === Completed Epoch 16/30 ===
+
+2025-04-16 07:40:40,394 - INFO - === Starting Epoch 17/30 ===
+2025-04-16 07:40:40,394 - INFO - Starting training for epoch 17
+2025-04-16 07:40:41,290 - INFO - Epoch 17 completed - Train Loss: 0.6504, Train Acc: 60.32%
+2025-04-16 07:40:41,290 - INFO - Starting validation for epoch 17
+2025-04-16 07:40:41,602 - INFO - Epoch 17 validation - Val Loss: 0.6131, Val Acc: 78.26%
+
+2025-04-16 07:40:41,603 - INFO - Learning rate adjusted from 0.00075 to 0.000375
+2025-04-16 07:40:41,603 - INFO - No improvement for 6 epochs. Best val loss: 0.6077 at epoch 11
+2025-04-16 07:40:41,603 - INFO - === Completed Epoch 17/30 ===
+
+2025-04-16 07:40:41,603 - INFO - === Starting Epoch 18/30 ===
+2025-04-16 07:40:41,603 - INFO - Starting training for epoch 18
+2025-04-16 07:40:42,493 - INFO - Epoch 18 completed - Train Loss: 0.6420, Train Acc: 62.96%
+2025-04-16 07:40:42,493 - INFO - Starting validation for epoch 18
+2025-04-16 07:40:42,787 - INFO - Epoch 18 validation - Val Loss: 0.6336, Val Acc: 52.17%
+
+2025-04-16 07:40:42,787 - INFO - No improvement for 7 epochs. Best val loss: 0.6077 at epoch 11
+2025-04-16 07:40:42,787 - INFO - === Completed Epoch 18/30 ===
+
+2025-04-16 07:40:42,787 - INFO - === Starting Epoch 19/30 ===
+2025-04-16 07:40:42,787 - INFO - Starting training for epoch 19
+2025-04-16 07:40:43,678 - INFO - Epoch 19 completed - Train Loss: 0.6292, Train Acc: 61.90%
+2025-04-16 07:40:43,679 - INFO - Starting validation for epoch 19
+2025-04-16 07:40:43,993 - INFO - Epoch 19 validation - Val Loss: 0.6367, Val Acc: 65.22%
+
+2025-04-16 07:40:43,993 - INFO - No improvement for 8 epochs. Best val loss: 0.6077 at epoch 11
+2025-04-16 07:40:43,993 - INFO - === Completed Epoch 19/30 ===
+
+2025-04-16 07:40:43,993 - INFO - === Starting Epoch 20/30 ===
+2025-04-16 07:40:43,993 - INFO - Starting training for epoch 20
+2025-04-16 07:40:44,890 - INFO - Epoch 20 completed - Train Loss: 0.6402, Train Acc: 61.90%
+2025-04-16 07:40:44,890 - INFO - Starting validation for epoch 20
+2025-04-16 07:40:45,194 - INFO - Epoch 20 validation - Val Loss: 0.5903, Val Acc: 69.57%
+
+2025-04-16 07:40:45,194 - INFO - Saving model and training statistics to ../models/spec_cnn/adress_spec
+2025-04-16 07:40:45,211 - INFO - Model checkpoint saved at epoch 20 with validation loss: 0.5903
+
+2025-04-16 07:40:45,211 - INFO - New best model saved at epoch 20 with validation loss: 0.5903
+2025-04-16 07:40:45,211 - INFO - === Completed Epoch 20/30 ===
+
+2025-04-16 07:40:45,211 - INFO - === Starting Epoch 21/30 ===
+2025-04-16 07:40:45,211 - INFO - Starting training for epoch 21
+2025-04-16 07:40:46,098 - INFO - Epoch 21 completed - Train Loss: 0.6251, Train Acc: 62.96%
+2025-04-16 07:40:46,098 - INFO - Starting validation for epoch 21
+2025-04-16 07:40:46,405 - INFO - Epoch 21 validation - Val Loss: 0.6066, Val Acc: 65.22%
+
+2025-04-16 07:40:46,406 - INFO - No improvement for 1 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:46,406 - INFO - === Completed Epoch 21/30 ===
+
+2025-04-16 07:40:46,406 - INFO - === Starting Epoch 22/30 ===
+2025-04-16 07:40:46,406 - INFO - Starting training for epoch 22
+2025-04-16 07:40:47,304 - INFO - Epoch 22 completed - Train Loss: 0.6375, Train Acc: 59.26%
+2025-04-16 07:40:47,304 - INFO - Starting validation for epoch 22
+2025-04-16 07:40:47,616 - INFO - Epoch 22 validation - Val Loss: 0.6162, Val Acc: 60.87%
+
+2025-04-16 07:40:47,617 - INFO - No improvement for 2 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:47,617 - INFO - === Completed Epoch 22/30 ===
+
+2025-04-16 07:40:47,617 - INFO - === Starting Epoch 23/30 ===
+2025-04-16 07:40:47,617 - INFO - Starting training for epoch 23
+2025-04-16 07:40:48,526 - INFO - Epoch 23 completed - Train Loss: 0.6389, Train Acc: 58.73%
+2025-04-16 07:40:48,526 - INFO - Starting validation for epoch 23
+2025-04-16 07:40:48,807 - INFO - Epoch 23 validation - Val Loss: 0.6430, Val Acc: 65.22%
+
+2025-04-16 07:40:48,807 - INFO - Learning rate adjusted from 0.000375 to 0.0001875
+2025-04-16 07:40:48,807 - INFO - No improvement for 3 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:48,807 - INFO - === Completed Epoch 23/30 ===
+
+2025-04-16 07:40:48,807 - INFO - === Starting Epoch 24/30 ===
+2025-04-16 07:40:48,807 - INFO - Starting training for epoch 24
+2025-04-16 07:40:49,700 - INFO - Epoch 24 completed - Train Loss: 0.6399, Train Acc: 62.96%
+2025-04-16 07:40:49,700 - INFO - Starting validation for epoch 24
+2025-04-16 07:40:50,009 - INFO - Epoch 24 validation - Val Loss: 0.6612, Val Acc: 60.87%
+
+2025-04-16 07:40:50,009 - INFO - No improvement for 4 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:50,009 - INFO - === Completed Epoch 24/30 ===
+
+2025-04-16 07:40:50,009 - INFO - === Starting Epoch 25/30 ===
+2025-04-16 07:40:50,009 - INFO - Starting training for epoch 25
+2025-04-16 07:40:50,910 - INFO - Epoch 25 completed - Train Loss: 0.6143, Train Acc: 62.96%
+2025-04-16 07:40:50,911 - INFO - Starting validation for epoch 25
+2025-04-16 07:40:51,223 - INFO - Epoch 25 validation - Val Loss: 0.6168, Val Acc: 52.17%
+
+2025-04-16 07:40:51,224 - INFO - No improvement for 5 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:51,224 - INFO - === Completed Epoch 25/30 ===
+
+2025-04-16 07:40:51,224 - INFO - === Starting Epoch 26/30 ===
+2025-04-16 07:40:51,224 - INFO - Starting training for epoch 26
+2025-04-16 07:40:52,102 - INFO - Epoch 26 completed - Train Loss: 0.6225, Train Acc: 62.96%
+2025-04-16 07:40:52,102 - INFO - Starting validation for epoch 26
+2025-04-16 07:40:52,410 - INFO - Epoch 26 validation - Val Loss: 0.6289, Val Acc: 69.57%
+
+2025-04-16 07:40:52,410 - INFO - Learning rate adjusted from 0.0001875 to 9.375e-05
+2025-04-16 07:40:52,410 - INFO - No improvement for 6 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:52,410 - INFO - === Completed Epoch 26/30 ===
+
+2025-04-16 07:40:52,410 - INFO - === Starting Epoch 27/30 ===
+2025-04-16 07:40:52,410 - INFO - Starting training for epoch 27
+2025-04-16 07:40:53,307 - INFO - Epoch 27 completed - Train Loss: 0.6039, Train Acc: 65.08%
+2025-04-16 07:40:53,307 - INFO - Starting validation for epoch 27
+2025-04-16 07:40:53,601 - INFO - Epoch 27 validation - Val Loss: 0.6119, Val Acc: 60.87%
+
+2025-04-16 07:40:53,601 - INFO - No improvement for 7 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:53,601 - INFO - === Completed Epoch 27/30 ===
+
+2025-04-16 07:40:53,601 - INFO - === Starting Epoch 28/30 ===
+2025-04-16 07:40:53,601 - INFO - Starting training for epoch 28
+2025-04-16 07:40:54,487 - INFO - Epoch 28 completed - Train Loss: 0.6252, Train Acc: 61.38%
+2025-04-16 07:40:54,487 - INFO - Starting validation for epoch 28
+2025-04-16 07:40:54,773 - INFO - Epoch 28 validation - Val Loss: 0.6267, Val Acc: 60.87%
+
+2025-04-16 07:40:54,773 - INFO - No improvement for 8 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:54,773 - INFO - === Completed Epoch 28/30 ===
+
+2025-04-16 07:40:54,773 - INFO - === Starting Epoch 29/30 ===
+2025-04-16 07:40:54,773 - INFO - Starting training for epoch 29
+2025-04-16 07:40:55,679 - INFO - Epoch 29 completed - Train Loss: 0.6304, Train Acc: 61.90%
+2025-04-16 07:40:55,679 - INFO - Starting validation for epoch 29
+2025-04-16 07:40:55,991 - INFO - Epoch 29 validation - Val Loss: 0.6129, Val Acc: 69.57%
+
+2025-04-16 07:40:55,991 - INFO - Learning rate adjusted from 9.375e-05 to 4.6875e-05
+2025-04-16 07:40:55,991 - INFO - No improvement for 9 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:55,991 - INFO - === Completed Epoch 29/30 ===
+
+2025-04-16 07:40:55,991 - INFO - === Starting Epoch 30/30 ===
+2025-04-16 07:40:55,991 - INFO - Starting training for epoch 30
+2025-04-16 07:40:56,917 - INFO - Epoch 30 completed - Train Loss: 0.5994, Train Acc: 68.25%
+2025-04-16 07:40:56,917 - INFO - Starting validation for epoch 30
+2025-04-16 07:40:57,219 - INFO - Epoch 30 validation - Val Loss: 0.6035, Val Acc: 65.22%
+
+2025-04-16 07:40:57,219 - INFO - No improvement for 10 epochs. Best val loss: 0.5903 at epoch 20
+2025-04-16 07:40:57,219 - INFO - Early stopping triggered after 30 epochs
+
+2025-04-16 07:40:57,219 - INFO - Training completed. Best validation loss: 0.5903 at epoch 20
+
+2025-04-16 07:40:57,219 - INFO - Training completed. Starting model evaluation
+2025-04-16 07:40:57,219 - INFO - Starting model evaluation on test set
+2025-04-16 07:40:57,524 - INFO - Test Evaluation Results:
+2025-04-16 07:40:57,524 - INFO - Test Accuracy: 56.00%
+2025-04-16 07:40:57,524 - INFO - Precision: 0.5000
+2025-04-16 07:40:57,524 - INFO - Recall: 0.6364
+2025-04-16 07:40:57,524 - INFO - F1 Score: 0.5600
+2025-04-16 07:40:57,524 - INFO - Generating confusion matrix
+2025-04-16 07:40:57,625 - INFO - Confusion matrix saved to ../models/spec_cnn/adress_spec/confusion_matrix.png
+2025-04-16 07:40:57,625 - INFO - Generating training history plots
+2025-04-16 07:40:57,856 - INFO - Training history plots saved to ../models/spec_cnn/adress_spec/training_history.png
+2025-04-16 07:40:57,856 - INFO - ================================================================================
+2025-04-16 07:40:57,856 - INFO - TRAINING SUMMARY:
+2025-04-16 07:40:57,856 - INFO - Model: spec_cnn on adress_spec dataset
+2025-04-16 07:40:57,856 - INFO - Best validation loss: 0.5903 achieved at epoch 20
+2025-04-16 07:40:57,856 - INFO - Final training accuracy: 68.25%
+2025-04-16 07:40:57,856 - INFO - Final validation accuracy: 65.22%
+2025-04-16 07:40:57,856 - INFO - Model saved at: ../models/spec_cnn/adress_spec
+2025-04-16 07:40:57,856 - INFO - Training completed successfully
+2025-04-16 07:40:57,856 - INFO - ================================================================================

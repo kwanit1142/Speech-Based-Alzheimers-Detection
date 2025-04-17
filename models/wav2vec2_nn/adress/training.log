@@ -1,0 +1,82 @@
+2025-04-16 18:56:01,787 - INFO - ================================================================================
+2025-04-16 18:56:01,787 - INFO - NEW TRAINING RUN: wav2vec2_nn on adress dataset with language awareness: False
+2025-04-16 18:56:01,787 - INFO - Parameters: Epochs=10, Batch Size=16, LR=0.003, Weight Decay=1e-05
+2025-04-16 18:56:01,787 - INFO - Continue Training: False, Patience: 3
+2025-04-16 18:56:01,787 - INFO - ================================================================================
+2025-04-16 18:56:01,798 - INFO - Using device: cuda
+
+2025-04-16 18:56:01,798 - INFO - Loading dataset...
+2025-04-16 18:56:32,701 - INFO - Dataset loaded - Train set: 5734, Validation set: 716, Test set: 718
+
+2025-04-16 18:56:32,701 - INFO - Using standard CrossEntropyLoss
+2025-04-16 18:56:32,701 - INFO - Initializing model and optimizer...
+2025-04-16 18:56:32,992 - INFO - No checkpoint found. Starting training from scratch.
+2025-04-16 18:56:32,993 - INFO - Model and optimizer initialized.
+
+2025-04-16 18:56:32,993 - INFO - TrainHandler initialized for model: wav2vec2_nn with language awareness: False
+
+2025-04-16 18:56:32,993 - INFO - Starting model training process
+2025-04-16 18:56:32,993 - INFO - Starting training process for 10 epochs with patience 3
+
+2025-04-16 18:56:32,993 - INFO - === Starting Epoch 1/10 ===
+2025-04-16 18:56:32,994 - INFO - Starting training for epoch 1
+2025-04-16 19:00:26,683 - INFO - Epoch 1 completed - Train Loss: 0.7303, Train Acc: 53.92%
+2025-04-16 19:00:26,684 - INFO - Starting validation for epoch 1
+2025-04-16 19:00:57,729 - INFO - Epoch 1 validation - Val Loss: 0.6773, Val Acc: 58.94%
+
+2025-04-16 19:00:57,730 - INFO - Saving model and training statistics to ../models/wav2vec2_nn/adress
+2025-04-16 19:00:59,961 - INFO - Model checkpoint saved at epoch 1 with validation loss: 0.6773
+
+2025-04-16 19:00:59,961 - INFO - New best model saved at epoch 1 with validation loss: 0.6773
+2025-04-16 19:00:59,961 - INFO - === Completed Epoch 1/10 ===
+
+2025-04-16 19:00:59,961 - INFO - === Starting Epoch 2/10 ===
+2025-04-16 19:00:59,961 - INFO - Starting training for epoch 2
+2025-04-16 19:04:56,547 - INFO - Epoch 2 completed - Train Loss: 0.7049, Train Acc: 55.55%
+2025-04-16 19:04:56,548 - INFO - Starting validation for epoch 2
+2025-04-16 19:05:27,780 - INFO - Epoch 2 validation - Val Loss: 0.6817, Val Acc: 58.94%
+
+2025-04-16 19:05:27,780 - INFO - No improvement for 1 epochs. Best val loss: 0.6773 at epoch 1
+2025-04-16 19:05:27,780 - INFO - === Completed Epoch 2/10 ===
+
+2025-04-16 19:05:27,780 - INFO - === Starting Epoch 3/10 ===
+2025-04-16 19:05:27,781 - INFO - Starting training for epoch 3
+2025-04-16 19:09:23,546 - INFO - Epoch 3 completed - Train Loss: 0.6933, Train Acc: 56.05%
+2025-04-16 19:09:23,547 - INFO - Starting validation for epoch 3
+2025-04-16 19:09:54,750 - INFO - Epoch 3 validation - Val Loss: 0.6799, Val Acc: 58.94%
+
+2025-04-16 19:09:54,750 - INFO - No improvement for 2 epochs. Best val loss: 0.6773 at epoch 1
+2025-04-16 19:09:54,750 - INFO - === Completed Epoch 3/10 ===
+
+2025-04-16 19:09:54,750 - INFO - === Starting Epoch 4/10 ===
+2025-04-16 19:09:54,750 - INFO - Starting training for epoch 4
+2025-04-16 19:13:50,282 - INFO - Epoch 4 completed - Train Loss: 0.6912, Train Acc: 56.21%
+2025-04-16 19:13:50,283 - INFO - Starting validation for epoch 4
+2025-04-16 19:14:22,599 - INFO - Epoch 4 validation - Val Loss: 0.6818, Val Acc: 58.94%
+
+2025-04-16 19:14:22,600 - INFO - Learning rate adjusted from 0.003 to 0.0015
+2025-04-16 19:14:22,600 - INFO - No improvement for 3 epochs. Best val loss: 0.6773 at epoch 1
+2025-04-16 19:14:22,600 - INFO - Early stopping triggered after 4 epochs
+
+2025-04-16 19:14:22,600 - INFO - Training completed. Best validation loss: 0.6773 at epoch 1
+
+2025-04-16 19:14:22,600 - INFO - Training completed. Starting model evaluation
+2025-04-16 19:14:22,600 - INFO - Starting model evaluation on test set
+2025-04-16 19:14:54,936 - INFO - Test Evaluation Results:
+2025-04-16 19:14:54,936 - INFO - Test Accuracy: 58.36%
+2025-04-16 19:14:54,936 - INFO - Precision: 0.0000
+2025-04-16 19:14:54,936 - INFO - Recall: 0.0000
+2025-04-16 19:14:54,936 - INFO - F1 Score: 0.0000
+2025-04-16 19:14:54,936 - INFO - Generating confusion matrix
+2025-04-16 19:14:55,037 - INFO - Confusion matrix saved to ../models/wav2vec2_nn/adress/confusion_matrix.png
+2025-04-16 19:14:55,037 - INFO - Generating training history plots
+2025-04-16 19:14:55,238 - INFO - Training history plots saved to ../models/wav2vec2_nn/adress/training_history.png
+2025-04-16 19:14:55,238 - INFO - ================================================================================
+2025-04-16 19:14:55,238 - INFO - TRAINING SUMMARY:
+2025-04-16 19:14:55,238 - INFO - Model: wav2vec2_nn on adress dataset
+2025-04-16 19:14:55,238 - INFO - Best validation loss: 0.6773 achieved at epoch 1
+2025-04-16 19:14:55,238 - INFO - Final training accuracy: 56.21%
+2025-04-16 19:14:55,238 - INFO - Final validation accuracy: 58.94%
+2025-04-16 19:14:55,238 - INFO - Model saved at: ../models/wav2vec2_nn/adress
+2025-04-16 19:14:55,238 - INFO - Training completed successfully
+2025-04-16 19:14:55,238 - INFO - ================================================================================

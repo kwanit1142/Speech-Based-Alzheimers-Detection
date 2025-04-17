@@ -1,0 +1,118 @@
+2025-04-16 15:19:05,952 - INFO - ================================================================================
+2025-04-16 15:19:05,952 - INFO - NEW TRAINING RUN: wavenet on ncmmsc dataset with language awareness: False
+2025-04-16 15:19:05,952 - INFO - Parameters: Epochs=10, Batch Size=16, LR=0.003, Weight Decay=1e-05
+2025-04-16 15:19:05,952 - INFO - Continue Training: False, Patience: 3
+2025-04-16 15:19:05,952 - INFO - ================================================================================
+2025-04-16 15:19:05,963 - INFO - Using device: cuda
+
+2025-04-16 15:19:05,964 - INFO - Loading dataset...
+2025-04-16 15:19:07,503 - INFO - Dataset loaded - Train set: 4633, Validation set: 579, Test set: 580
+
+2025-04-16 15:19:07,504 - INFO - Using standard CrossEntropyLoss
+2025-04-16 15:19:07,504 - INFO - Initializing model and optimizer...
+2025-04-16 15:19:07,717 - INFO - No checkpoint found. Starting training from scratch.
+2025-04-16 15:19:07,718 - INFO - Model and optimizer initialized.
+
+2025-04-16 15:19:07,718 - INFO - TrainHandler initialized for model: wavenet with language awareness: False
+
+2025-04-16 15:19:07,718 - INFO - Starting model training process
+2025-04-16 15:19:07,718 - INFO - Starting training process for 10 epochs with patience 3
+
+2025-04-16 15:19:07,718 - INFO - === Starting Epoch 1/10 ===
+2025-04-16 15:19:07,718 - INFO - Starting training for epoch 1
+2025-04-16 15:20:28,947 - INFO - Epoch 1 completed - Train Loss: 0.5272, Train Acc: 75.24%
+2025-04-16 15:20:28,947 - INFO - Starting validation for epoch 1
+2025-04-16 15:20:32,273 - INFO - Epoch 1 validation - Val Loss: 0.6893, Val Acc: 58.38%
+
+2025-04-16 15:20:32,274 - INFO - Saving model and training statistics to ../models/wavenet/ncmmsc
+2025-04-16 15:20:32,300 - INFO - Model checkpoint saved at epoch 1 with validation loss: 0.6893
+
+2025-04-16 15:20:32,301 - INFO - New best model saved at epoch 1 with validation loss: 0.6893
+2025-04-16 15:20:32,301 - INFO - === Completed Epoch 1/10 ===
+
+2025-04-16 15:20:32,301 - INFO - === Starting Epoch 2/10 ===
+2025-04-16 15:20:32,301 - INFO - Starting training for epoch 2
+2025-04-16 15:21:54,599 - INFO - Epoch 2 completed - Train Loss: 0.3953, Train Acc: 84.14%
+2025-04-16 15:21:54,599 - INFO - Starting validation for epoch 2
+2025-04-16 15:21:57,942 - INFO - Epoch 2 validation - Val Loss: 0.6829, Val Acc: 58.20%
+
+2025-04-16 15:21:57,943 - INFO - Saving model and training statistics to ../models/wavenet/ncmmsc
+2025-04-16 15:21:57,970 - INFO - Model checkpoint saved at epoch 2 with validation loss: 0.6829
+
+2025-04-16 15:21:57,970 - INFO - New best model saved at epoch 2 with validation loss: 0.6829
+2025-04-16 15:21:57,970 - INFO - === Completed Epoch 2/10 ===
+
+2025-04-16 15:21:57,970 - INFO - === Starting Epoch 3/10 ===
+2025-04-16 15:21:57,970 - INFO - Starting training for epoch 3
+2025-04-16 15:23:20,199 - INFO - Epoch 3 completed - Train Loss: 0.3465, Train Acc: 85.69%
+2025-04-16 15:23:20,200 - INFO - Starting validation for epoch 3
+2025-04-16 15:23:23,530 - INFO - Epoch 3 validation - Val Loss: 0.6791, Val Acc: 58.20%
+
+2025-04-16 15:23:23,531 - INFO - Saving model and training statistics to ../models/wavenet/ncmmsc
+2025-04-16 15:23:23,557 - INFO - Model checkpoint saved at epoch 3 with validation loss: 0.6791
+
+2025-04-16 15:23:23,557 - INFO - New best model saved at epoch 3 with validation loss: 0.6791
+2025-04-16 15:23:23,557 - INFO - === Completed Epoch 3/10 ===
+
+2025-04-16 15:23:23,557 - INFO - === Starting Epoch 4/10 ===
+2025-04-16 15:23:23,557 - INFO - Starting training for epoch 4
+2025-04-16 15:24:45,912 - INFO - Epoch 4 completed - Train Loss: 0.3095, Train Acc: 87.16%
+2025-04-16 15:24:45,912 - INFO - Starting validation for epoch 4
+2025-04-16 15:24:49,261 - INFO - Epoch 4 validation - Val Loss: 0.6774, Val Acc: 58.20%
+
+2025-04-16 15:24:49,262 - INFO - Saving model and training statistics to ../models/wavenet/ncmmsc
+2025-04-16 15:24:49,289 - INFO - Model checkpoint saved at epoch 4 with validation loss: 0.6774
+
+2025-04-16 15:24:49,289 - INFO - New best model saved at epoch 4 with validation loss: 0.6774
+2025-04-16 15:24:49,289 - INFO - === Completed Epoch 4/10 ===
+
+2025-04-16 15:24:49,289 - INFO - === Starting Epoch 5/10 ===
+2025-04-16 15:24:49,289 - INFO - Starting training for epoch 5
+2025-04-16 15:26:11,748 - INFO - Epoch 5 completed - Train Loss: 0.2690, Train Acc: 88.63%
+2025-04-16 15:26:11,748 - INFO - Starting validation for epoch 5
+2025-04-16 15:26:15,105 - INFO - Epoch 5 validation - Val Loss: 1.0296, Val Acc: 35.06%
+
+2025-04-16 15:26:15,105 - INFO - No improvement for 1 epochs. Best val loss: 0.6774 at epoch 4
+2025-04-16 15:26:15,105 - INFO - === Completed Epoch 5/10 ===
+
+2025-04-16 15:26:15,105 - INFO - === Starting Epoch 6/10 ===
+2025-04-16 15:26:15,105 - INFO - Starting training for epoch 6
+2025-04-16 15:27:37,559 - INFO - Epoch 6 completed - Train Loss: 0.2681, Train Acc: 88.86%
+2025-04-16 15:27:37,560 - INFO - Starting validation for epoch 6
+2025-04-16 15:27:40,903 - INFO - Epoch 6 validation - Val Loss: 0.8656, Val Acc: 46.80%
+
+2025-04-16 15:27:40,903 - INFO - No improvement for 2 epochs. Best val loss: 0.6774 at epoch 4
+2025-04-16 15:27:40,903 - INFO - === Completed Epoch 6/10 ===
+
+2025-04-16 15:27:40,903 - INFO - === Starting Epoch 7/10 ===
+2025-04-16 15:27:40,903 - INFO - Starting training for epoch 7
+2025-04-16 15:29:03,196 - INFO - Epoch 7 completed - Train Loss: 0.2384, Train Acc: 90.70%
+2025-04-16 15:29:03,196 - INFO - Starting validation for epoch 7
+2025-04-16 15:29:06,559 - INFO - Epoch 7 validation - Val Loss: 1.6584, Val Acc: 42.66%
+
+2025-04-16 15:29:06,560 - INFO - Learning rate adjusted from 0.003 to 0.0015
+2025-04-16 15:29:06,560 - INFO - No improvement for 3 epochs. Best val loss: 0.6774 at epoch 4
+2025-04-16 15:29:06,560 - INFO - Early stopping triggered after 7 epochs
+
+2025-04-16 15:29:06,560 - INFO - Training completed. Best validation loss: 0.6774 at epoch 4
+
+2025-04-16 15:29:06,560 - INFO - Training completed. Starting model evaluation
+2025-04-16 15:29:06,560 - INFO - Starting model evaluation on test set
+2025-04-16 15:29:09,904 - INFO - Test Evaluation Results:
+2025-04-16 15:29:09,904 - INFO - Test Accuracy: 37.59%
+2025-04-16 15:29:09,904 - INFO - Precision: 0.3737
+2025-04-16 15:29:09,904 - INFO - Recall: 1.0000
+2025-04-16 15:29:09,904 - INFO - F1 Score: 0.5441
+2025-04-16 15:29:09,904 - INFO - Generating confusion matrix
+2025-04-16 15:29:10,004 - INFO - Confusion matrix saved to ../models/wavenet/ncmmsc/confusion_matrix.png
+2025-04-16 15:29:10,004 - INFO - Generating training history plots
+2025-04-16 15:29:10,210 - INFO - Training history plots saved to ../models/wavenet/ncmmsc/training_history.png
+2025-04-16 15:29:10,210 - INFO - ================================================================================
+2025-04-16 15:29:10,210 - INFO - TRAINING SUMMARY:
+2025-04-16 15:29:10,210 - INFO - Model: wavenet on ncmmsc dataset
+2025-04-16 15:29:10,210 - INFO - Best validation loss: 0.6774 achieved at epoch 4
+2025-04-16 15:29:10,210 - INFO - Final training accuracy: 90.70%
+2025-04-16 15:29:10,210 - INFO - Final validation accuracy: 42.66%
+2025-04-16 15:29:10,210 - INFO - Model saved at: ../models/wavenet/ncmmsc
+2025-04-16 15:29:10,210 - INFO - Training completed successfully
+2025-04-16 15:29:10,210 - INFO - ================================================================================
