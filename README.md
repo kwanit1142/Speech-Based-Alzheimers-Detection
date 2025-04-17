@@ -183,7 +183,7 @@ The directory structure explanation is as follows:
     <th colspan="2" align="center"><strong>ADReSS</strong></th>
     <th style="border-left: 1px solid #ddd;" colspan="2" align="center"><strong>NCMMSC</strong></th>
     <th style="border-left: 1px solid #ddd;" colspan="2" align="center"><strong>Combined</strong></th>
-    <th style="border-left: 1px solid #ddd;" colspan="2" align="center"><strong>Combined with Language</strong></th>
+    <th style="border-left: 1px solid #ddd;" colspan="2" align="center"><strong>Combined with Language Awareness</strong></th>
   </tr>
   <tr>
     <th></th>
