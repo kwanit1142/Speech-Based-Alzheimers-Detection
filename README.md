@@ -252,3 +252,6 @@ The directory structure explanation is as follows:
     <td align="center">72.55</td>
   </tr>
 </table>
+
+
+**NOTE**: This repository does not contain wav2vec2 pth files due to their large size.
