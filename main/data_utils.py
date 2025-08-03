@@ -8,6 +8,7 @@ import os
 import math
 import librosa
 import enum
+from audiomentations import Compose, PitchShift, GainTransition, AddGaussianNoise, TimeStretch, Shift, Gain, PolarityInversion, HighPassFilter, LowPassFilter
 
 
 DATA_DIR = "../data"
@@ -285,7 +286,24 @@ class NCMMSCSpectrogramDataset(Dataset):
 
         return img_tensor, torch.tensor(label, dtype=torch.long)
 
-        
+def collate_with_augmentation(batch):
+    train_aug = Compose([
+            AddGaussianNoise(min_amplitude=0.001, max_amplitude=0.005, p=0.5),
+            # TimeStretch(min_rate=0.95, max_rate=1.05, p=0.5),
+            # PitchShift(min_semitones=-0.25, max_semitones=0.25, p=0.5),
+            # GainTransition(p=0.5),
+            # Shift(min_fraction=-0.1, max_fraction=0.1, p=0.5),
+            # Gain(min_gain_in_db=-3, max_gain_in_db=3, p=0.5),
+            # PolarityInversion(p=0.5),
+            # HighPassFilter(min_cutoff_freq=200.0, max_cutoff_freq=400.0, p=0.5),
+            # LowPassFilter(min_cutoff_freq=3000.0, max_cutoff_freq=6000.0, p=0.5),
+        ])
+    augmented_batch = []
+    for x, y in batch:
+        x_aug = train_aug(samples=x.squeeze().numpy(), sample_rate=16000)
+        x_aug = torch.FloatTensor(x_aug).unsqueeze(0)
+        augmented_batch.append((x_aug, y))
+    return torch.utils.data.default_collate(augmented_batch)    
  
 def get_dataloaders(dataset_name, batch_size=32, num_workers=4, lang_aware=False):
     """
@@ -306,12 +324,12 @@ def get_dataloaders(dataset_name, batch_size=32, num_workers=4, lang_aware=False
     train_size = int(0.8 * total_size)
     val_size = int(0.10 * total_size)
     test_size = total_size - train_size - val_size
-    
+    generator = torch.Generator().manual_seed(42)
     train_dataset, val_dataset, test_dataset = random_split(
-        dataset, [train_size, val_size, test_size])
+        dataset, [train_size, val_size, test_size], generator=generator)
 
     dataloader = {
-        'train': DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers),
+        'train': DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers, collate_fn=collate_with_augmentation),
         'val': DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers),
         'test': DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
     }
@@ -338,9 +356,9 @@ def get_spectrogram_dataloaders(dataset_name, batch_size=32, num_workers=4, lang
     train_size = int(0.8 * total_size)
     val_size = int(0.10 * total_size)
     test_size = total_size - train_size - val_size
-    
+    generator = torch.Generator().manual_seed(42)
     train_dataset, val_dataset, test_dataset = random_split(
-        dataset, [train_size, val_size, test_size])
+        dataset, [train_size, val_size, test_size], generator=generator)
 
     dataloader = {
         'train': DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers),
