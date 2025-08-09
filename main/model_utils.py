@@ -135,7 +135,7 @@ class BaseAudioModel(nn.Module):
 
 class GammaERBCNN(BaseAudioModel):
     def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(GammaCNN, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+        super(GammaERBCNN, self).__init__(num_disease_classes, num_language_classes, lang_aware)
         
         self.conv1 = GammaConv1dGreenwoodERB()
         self.pool1 = nn.MaxPool1d(kernel_size=8, stride=8)
@@ -179,7 +179,7 @@ class GammaERBCNN(BaseAudioModel):
 
 class GammaGMCNN(BaseAudioModel):
     def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(GammaCNN, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+        super(GammaGMCNN, self).__init__(num_disease_classes, num_language_classes, lang_aware)
 
         self.conv1 = GammaConv1dGlasbergMoore(
             in_channels=1, 
