@@ -18,13 +18,21 @@ class LanguageEnum(enum.Enum):
     """Enum for available languages."""
     ENGLISH = 0
     CHINESE = 1
+    SPANISH = 2
+    MANDARIN = 3
+    TAIWANESE = 4
+    GERMAN = 5
+    GREEK = 6
 
 
 class Datasets(enum.Enum):
     """Enum for available datasets."""
     ALL = "all"
     ADRESS = "adress"
+    ADRESS2k20 = "adress2k20"
     NCMMSC = "ncmmsc"
+    IVANOVA = "ivanova"
+    MANDARIN_CHOU = "mchou" 
     ADRESS_SPEC = "adress_spec"
     NCMMSC_SPEC = "ncmmsc_spec"
 
@@ -139,7 +147,39 @@ class ADReSSDataset(DimentiaDataset):
         for audio_path, label in zip(original_audio_paths, original_labels):
             full_path = os.path.join(self.base_dir, f"{audio_path}.mp3")
             self._add_audio_splits(audio_path, full_path, self.class_map[label], self.language)
-    
+
+class ADReSS2k20Dataset(DimentiaDataset):
+    """
+    Dataset class for the ADReSS2k20 dataset.
+    0 - AD - cd
+    1 - Control - cc
+    """
+    def __init__(self, split_duration=5.0, overlap_factor=0.5, lang_aware=False):
+        super().__init__(split_duration, overlap_factor, lang_aware)
+        
+        self.class_mapping = {
+            "cc": 0, "cd": 1,
+        }
+
+        self.language = LanguageEnum.ENGLISH
+
+        self.base_dir = f"{DATA_DIR}/English/0extra/ADReSS-2k20"
+        self.load_dataset()
+
+
+    def load_dataset(self):
+        for class_name, class_label in self.class_mapping.items():
+            class_dir = os.path.join(self.base_dir, "train/Full_wave_enhanced_audio", class_name)
+            
+            if not os.path.isdir(class_dir):
+                print(f"Warning: Directory {class_dir} not found, skipping.")
+                continue
+            
+            for filename in os.listdir(class_dir):
+                if filename.endswith(('.wav', '.mp3', '.flac')):
+                    audio_path = os.path.join(class_dir, filename)
+                    audio_name = os.path.splitext(filename)[0]
+                    self._add_audio_splits(audio_name, audio_path, class_label, self.language)
 
 class NCMMSCDataset(DimentiaDataset):
     """
@@ -175,6 +215,116 @@ class NCMMSCDataset(DimentiaDataset):
                     audio_name = os.path.splitext(filename)[0]
                     self._add_audio_splits(audio_name, audio_path, class_label, self.language)
 
+class SpanishIvanovaDataset(DimentiaDataset):
+    """
+    Dataset class for the NCMMSC dataset.
+    0 - ProbableAD - MCI and AD
+    1 - Control (Healthy)
+    """
+    def __init__(self, split_duration=5.0, overlap_factor=0.5, lang_aware=False):
+        super().__init__(split_duration, overlap_factor, lang_aware)
+        
+        self.class_mapping = {
+            "MCI": 2, "HC": 0, "AD": 1,
+            # "MCI": 1, "HC": 0, "AD": 1,
+        }
+
+        self.language = LanguageEnum.SPANISH
+
+        self.base_dir = f"{DATA_DIR}/Spanish/Ivanova"
+
+        self.load_dataset()
+
+
+    def load_dataset(self):
+        for class_name, class_label in self.class_mapping.items():
+            class_dir = os.path.join(self.base_dir, class_name)
+            
+            if not os.path.isdir(class_dir):
+                print(f"Warning: Directory {class_dir} not found, skipping.")
+                continue
+            
+            for filename in os.listdir(class_dir):
+                if filename.endswith(('.wav', '.mp3', '.flac')):
+                    audio_path = os.path.join(class_dir, filename)
+                    audio_name = os.path.splitext(filename)[0]
+                    self._add_audio_splits(audio_name, audio_path, class_label, self.language)
+
+class MandarinChouDataset(DimentiaDataset):
+    """
+    Dataset class for the NCMMSC dataset.
+    0 - ProbableAD - MCI and AD
+    1 - Control (Healthy)
+    """
+    def __init__(self, split_duration=5.0, overlap_factor=0.5, lang_aware=False):
+        super().__init__(split_duration, overlap_factor, lang_aware)
+        
+        self.class_mapping = {
+            "MCI": 0, "HC": 1
+        }
+
+        self.language = LanguageEnum.MANDARIN
+
+        self.base_dir = f"{DATA_DIR}/Mandarin/Chou"
+
+        self.load_dataset()
+
+
+    def load_dataset(self):
+        for class_name, class_label in self.class_mapping.items():
+            class_dir = os.path.join(self.base_dir, class_name)
+            
+            if not os.path.isdir(class_dir):
+                print(f"Warning: Directory {class_dir} not found, skipping.")
+                continue
+            
+            for subdir in [sdir for sdir in os.scandir(class_dir) if sdir]:
+                cls_dir = os.path.join(class_dir, subdir)
+                for filename in os.listdir(cls_dir):
+                    if filename.endswith(('.wav', '.mp3', '.flac')):
+                        audio_path = os.path.join(cls_dir, filename)
+                        audio_name = os.path.splitext(filename)[0]
+                        self._add_audio_splits(audio_name, audio_path, class_label, self.language)
+
+class GreekDataset(DimentiaDataset):
+    """
+    Dataset class for the NCMMSC dataset.
+    0 - ProbableAD - MCI and AD
+    1 - Control (Healthy)
+    """
+    def __init__(self, split_duration=5.0, overlap_factor=0.5, lang_aware=False):
+        super().__init__(split_duration, overlap_factor, lang_aware)
+        
+        self.class_mapping = {
+            "MCI": 0, "HC": 1
+        }
+
+        self.language = LanguageEnum.MANDARIN
+
+        self.base_dir = f"{DATA_DIR}/Greek/Dem@Care"
+
+        self.load_dataset()
+
+
+    def load_dataset(self):
+        # for class_name, class_label in self.class_mapping.items():
+        #     class_dir = os.path.join(self.base_dir, class_name)
+            
+        #     if not os.path.isdir(class_dir):
+        #         print(f"Warning: Directory {class_dir} not found, skipping.")
+        #         continue
+            
+        #     for subdir in [sdir for sdir in os.scandir(class_dir) if sdir]:
+        #         for filename in os.listdir(class_dir):
+        #             if filename.endswith(('.wav', '.mp3', '.flac')):
+        #                 audio_path = os.path.join(class_dir, filename)
+        #                 audio_name = os.path.splitext(filename)[0]
+        #                 self._add_audio_splits(audio_name, audio_path, class_label, self.language)
+        """
+        Handle long, short directories before going for AD, HC, MCI 
+        """
+
+        pass
 
 class ADReSSSpectrogramDataset(Dataset):
     """
@@ -315,10 +465,16 @@ def get_dataloaders(dataset_name, batch_size=32, num_workers=4, lang_aware=False
         dataset = ConcatDataset(datasets)
     elif dataset_name == Datasets.ADRESS:
         dataset = ADReSSDataset(lang_aware=lang_aware)
+    elif dataset_name == Datasets.ADRESS2k20:
+        dataset = ADReSS2k20Dataset(lang_aware=lang_aware)
     elif dataset_name == Datasets.NCMMSC:
         dataset = NCMMSCDataset(lang_aware=lang_aware)
+    elif dataset_name == Datasets.IVANOVA:
+        dataset = SpanishIvanovaDataset(lang_aware=lang_aware)
+    elif dataset_name == Datasets.MANDARIN_CHOU:
+        dataset = MandarinChouDataset(lang_aware=lang_aware)
     else:
-        raise ValueError(f"Unknown dataset name: {dataset_name}")
+        raise ValueError(f"Unknown dataset name: {dataset_name}")    
     
     total_size = len(dataset)
     train_size = int(0.8 * total_size)
