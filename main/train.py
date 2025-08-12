@@ -16,7 +16,80 @@ import logging
 
 MODELS_DIR = "../models"
 
+def get_inverse_class_frequencies(dataloader):
+    """
+    Computes inverse class frequencies from a DataLoader and rescales them 
+    so the smallest non-zero value is 1.
+    
+    Args:
+        dataloader: DataLoader yielding (X, y) batches
+    Returns:
+        num_classes (int): number of detected classes
+        alpha_list (list): rescaled inverse frequencies in class index order
+    """
+    all_labels = []
 
+    for _, labels in dataloader:
+        all_labels.append(labels.view(-1))  # flatten batch
+
+    all_labels = torch.cat(all_labels)
+    num_classes = int(all_labels.max().item()) + 1  # auto-detect
+
+    counts = torch.bincount(all_labels, minlength=num_classes).float()
+    inverse_freq = torch.where(counts > 0, 1.0 / counts, torch.zeros_like(counts))
+
+    # Rescale so smallest non-zero becomes 1
+    min_val = inverse_freq[inverse_freq > 0].min()
+    inverse_freq = inverse_freq / min_val
+
+    return torch.tensor(inverse_freq.tolist(), dtype=torch.float)
+
+class FocalLoss(nn.Module):
+    def __init__(self, alpha=None, gamma=2.0, reduction='mean'):
+        """
+        Focal Loss wrapper around CrossEntropyLoss.
+
+        Args:
+            alpha (None, list, tensor): Per-class weighting factor.
+                                         - None: no weighting
+                                         - list/tensor: per-class weights
+            gamma (float): Focusing parameter.
+            reduction (str): 'none' | 'mean' | 'sum'
+        """
+        super(FocalLoss, self).__init__()
+        self.gamma = gamma
+        self.reduction = reduction
+
+        if alpha is None:
+            ce_alpha = None
+        else:
+            if isinstance(alpha, (list, tuple)):
+                ce_alpha = torch.tensor(alpha, dtype=torch.float)
+            elif isinstance(alpha, torch.Tensor):
+                ce_alpha = alpha.float()
+            else:
+                raise TypeError("alpha must be None, list, tuple, or torch.Tensor.")
+
+        # Register buffer so it moves automatically to GPU with the model
+        self.register_buffer("alpha", ce_alpha if alpha is not None else torch.tensor([]))
+
+    def forward(self, inputs, targets):
+        # If alpha is empty, use None
+        if self.alpha.numel() > 0:
+            ce_loss = F.cross_entropy(inputs, targets, weight=self.alpha.to(inputs.device), reduction='none')
+        else:
+            ce_loss = F.cross_entropy(inputs, targets, reduction='none')
+
+        pt = torch.exp(-ce_loss)  # equivalent to probs.gather(...)
+        focal_factor = (1 - pt) ** self.gamma
+        loss = focal_factor * ce_loss
+
+        if self.reduction == 'mean':
+            return loss.mean()
+        elif self.reduction == 'sum':
+            return loss.sum()
+        return loss
+        
 class CombinedCrossEntropyLoss(nn.Module):
     def __init__(self, model=None, lambda1=0.5):
         super(CombinedCrossEntropyLoss, self).__init__()
@@ -404,6 +477,9 @@ if __name__ == "__main__":
         criterion = CombinedCrossEntropyLoss()
         logging.info("Using CombinedCrossEntropyLoss for language-aware training")
     else:
+        # alpha_cls = get_inverse_class_frequencies(train_loader)
+        # criterion = FocalLoss(alpha=alpha_cls)
+        # logging.info("Using Focal Loss")
         criterion = nn.CrossEntropyLoss()
         logging.info("Using standard CrossEntropyLoss")
 
