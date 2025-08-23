@@ -112,30 +112,46 @@ class GammaConv1dGlasbergMoore(nn.Conv1d):
         return g.astype(np.float32)
 
 class BaseAudioModel(nn.Module):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, lang_aware=True):
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 lstm_hidden=128, lstm_layers=2, bidirectional=True,
+                 lang_aware=True):
         super(BaseAudioModel, self).__init__()
         self.lang_aware = lang_aware
         self.base_feature_extractor = nn.Identity()
         self.language_head = nn.Identity()
         self.disease_feature_extractor = nn.Identity()
         self.disease_head = nn.Identity()
+        self.temporal_layer = nn.Identity()
 
     def forward(self, x):
-        base_features = self.base_feature_extractor(x)
-        
-        lang_logits = self.language_head(base_features)
+        lang_logits_list = []
+        disease_features_seq = []
+        for chunk in range(x.shape[1]):
+            x_item = x[:,chunk,:].unsqueeze(1)
+            base_features = self.base_feature_extractor(x_item)
+            # lang_logits = self.language_head(base_features)
+            # lang_logits_list.append(lang_logits)
+            disease_features = self.disease_feature_extractor(base_features)
+            disease_features_seq.append(disease_features)
+        disease_features_seq = torch.stack(disease_features_seq, dim=1)
+        lstm_out, _ = self.temporal_layer(disease_features_seq)  # [B, num_chunks, H]
 
-        disease_features = self.disease_feature_extractor(base_features)
+        disease_features = lstm_out[:, -1, :]
+        
         disease_logits = self.disease_head(disease_features)
 
         if self.lang_aware:
+            lang_logits = torch.mean(torch.stack(lang_logits_list, dim=1), dim=1)
             return disease_logits, lang_logits
 
         return disease_logits
 
 class GammaERBCNN(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(GammaERBCNN, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=128*4,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(GammaERBCNN, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
         
         self.conv1 = GammaConv1dGreenwoodERB()
         self.pool1 = nn.MaxPool1d(kernel_size=8, stride=8)
@@ -153,6 +169,17 @@ class GammaERBCNN(BaseAudioModel):
         self.fc2 = nn.Linear(128, 64)
         self.dropout2 = nn.Dropout(0.25)
 
+        self.bidirectional = bidirectional
+        lstm_input_dim = 1024
+
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
+
         # Define heads
         self.base_feature_extractor = nn.Sequential(
             self.conv1, # nn.BatchNorm1d(64),
@@ -168,18 +195,21 @@ class GammaERBCNN(BaseAudioModel):
         )
 
         self.disease_feature_extractor = nn.Sequential(
-            self.flatten, self.fc1,
-            nn.ReLU()
+            self.flatten
         )
 
         self.disease_head = nn.Sequential(
-            self.fc2,
+            self.fc1,
+            nn.ReLU(), self.fc2,
             nn.ReLU(), self.dropout2, nn.Linear(64, num_disease_classes)
         )
 
 class GammaGMCNN(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(GammaGMCNN, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=128*4,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(GammaGMCNN, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
 
         self.conv1 = GammaConv1dGlasbergMoore(
             in_channels=1, 
@@ -204,6 +234,17 @@ class GammaGMCNN(BaseAudioModel):
         self.fc2 = nn.Linear(128, 64)
         self.dropout2 = nn.Dropout(0.25)
 
+        self.bidirectional = bidirectional
+        lstm_input_dim = 1024
+
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        ) 
+
         # Define heads
         self.base_feature_extractor = nn.Sequential(
             self.conv1, # nn.BatchNorm1d(16),
@@ -219,18 +260,21 @@ class GammaGMCNN(BaseAudioModel):
         )
 
         self.disease_feature_extractor = nn.Sequential(
-            self.flatten, self.fc1,
-            nn.ReLU()
+            self.flatten
         )
 
         self.disease_head = nn.Sequential(
-            self.fc2,
+            self.fc1,
+            nn.ReLU(), self.fc2,
             nn.ReLU(), self.dropout2, nn.Linear(64, num_disease_classes)
         )
 
 class SoundNet8(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(SoundNet8, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=1401/2,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(SoundNet8, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
         
         self.conv1 = nn.Conv1d(1, 16, kernel_size=64, stride=2, padding=32)
         self.pool1 = nn.MaxPool1d(kernel_size=8, stride=1, padding=0)
@@ -252,6 +296,17 @@ class SoundNet8(BaseAudioModel):
         self.fc2 = nn.Linear(160, 80)
         self.dropout2 = nn.Dropout(0.25)
 
+        self.bidirectional = bidirectional
+        lstm_input_dim = 1401
+
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
+
         # Define heads
         self.base_feature_extractor = nn.Sequential(
             self.conv1, # nn.BatchNorm1d(16),
@@ -271,18 +326,21 @@ class SoundNet8(BaseAudioModel):
         )
 
         self.disease_feature_extractor = nn.Sequential(
-            nn.AdaptiveAvgPool1d(1), self.flatten, self.fc1,
-            nn.ReLU(), self.dropout1
+            nn.AdaptiveAvgPool1d(1), self.flatten
         )
 
         self.disease_head = nn.Sequential(
-            self.fc2,
+            self.fc1,
+            nn.ReLU(), self.dropout1, self.fc2,
             nn.ReLU(), self.dropout2, nn.Linear(80, num_disease_classes)
         )
 
 class SoundNet5(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(SoundNet5, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=1401/2,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(SoundNet5, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
         
         self.conv1 = nn.Conv1d(1, 32, kernel_size=64, stride=2, padding=32)
         self.pool1 = nn.MaxPool1d(kernel_size=8, stride=8, padding=0)
@@ -301,6 +359,16 @@ class SoundNet5(BaseAudioModel):
         self.fc2 = nn.Linear(160, 80)
         self.dropout2 = nn.Dropout(0.25)
 
+        self.bidirectional = bidirectional
+        lstm_input_dim = 1401
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
+
         # Define heads
         self.base_feature_extractor = nn.Sequential(
             self.conv1, # nn.BatchNorm1d(32),
@@ -317,18 +385,21 @@ class SoundNet5(BaseAudioModel):
         )
 
         self.disease_feature_extractor = nn.Sequential(
-            nn.AdaptiveAvgPool1d(1), self.flatten, self.fc1,
-            nn.ReLU(), self.dropout1
+            nn.AdaptiveAvgPool1d(1), self.flatten
         )
 
         self.disease_head = nn.Sequential(
-            self.fc2, 
+            self.fc1,
+            nn.ReLU(), self.dropout1, self.fc2, 
             nn.ReLU(), self.dropout2, nn.Linear(80, num_disease_classes)
         )
 
 class KurdishCNN(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(KurdishCNN, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=50,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(KurdishCNN, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
         
         self.conv1 = nn.Conv1d(in_channels=1, out_channels=100, kernel_size=3, stride=4)
         self.conv2 = nn.Conv1d(in_channels=100, out_channels=100, kernel_size=3, stride=4)
@@ -338,6 +409,16 @@ class KurdishCNN(BaseAudioModel):
         self.fc1 = nn.Linear(100, 80)
         self.fc1l = nn.Linear(100, 80)
         self.fc2 = nn.Linear(80, 40)
+
+        self.bidirectional = bidirectional
+        lstm_input_dim = 100
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
 
         # Define heads
         self.base_feature_extractor = nn.Sequential(
@@ -353,18 +434,21 @@ class KurdishCNN(BaseAudioModel):
         )
 
         self.disease_feature_extractor = nn.Sequential(
-            nn.AdaptiveAvgPool1d(1), self.flatten, self.fc1,
-            nn.ReLU()
+            nn.AdaptiveAvgPool1d(1), self.flatten
         )
 
         self.disease_head = nn.Sequential(
-            self.fc2,
+            self.fc1,
+            nn.ReLU(), self.fc2,
             nn.ReLU(), nn.Linear(40, num_disease_classes)
         )
 
 class M3(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(M3, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=128,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(M3, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
         
         self.conv1 = nn.Conv1d(in_channels=1, out_channels=256, kernel_size=80, stride=4)
         self.pool1 = nn.MaxPool1d(kernel_size=4)
@@ -373,6 +457,15 @@ class M3(BaseAudioModel):
         self.pool3 = nn.AdaptiveAvgPool1d(1)
         self.flatten = nn.Flatten()
         self.flattenl = nn.Flatten()
+        self.bidirectional = bidirectional
+        lstm_input_dim = 256
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
 
         # Define heads
         self.base_feature_extractor = nn.Sequential(
@@ -387,17 +480,20 @@ class M3(BaseAudioModel):
         )
 
         self.disease_feature_extractor = nn.Sequential(
-            self.flatten, nn.Linear(256, 128),
-            nn.ReLU()
+            self.flatten
         )
 
         self.disease_head = nn.Sequential(
-            nn.Linear(128, num_disease_classes)
+            nn.Linear(256, 128),
+            nn.ReLU(), nn.Linear(128, num_disease_classes)
         )
 
 class M5(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(M5, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=256,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(M5, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
         
         self.conv1 = nn.Conv1d(in_channels=1, out_channels=128, kernel_size=80, stride=4)
         self.pool1 = nn.MaxPool1d(kernel_size=4)
@@ -410,6 +506,15 @@ class M5(BaseAudioModel):
         self.pool5 = nn.AdaptiveAvgPool1d(1)
         self.flatten = nn.Flatten()
         self.flattenl = nn.Flatten()
+        self.bidirectional = bidirectional
+        lstm_input_dim = 512
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
 
         # Define heads
         self.base_feature_extractor = nn.Sequential(
@@ -426,17 +531,20 @@ class M5(BaseAudioModel):
         )
 
         self.disease_feature_extractor = nn.Sequential(
-            self.flatten, nn.Linear(512, 128),
-            nn.ReLU()
+            self.flatten
         )
 
         self.disease_head = nn.Sequential(
-            nn.Linear(128, num_disease_classes)
+            nn.Linear(512, 128),
+            nn.ReLU(), nn.Linear(128, num_disease_classes)
         )
 
 class M11(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(M11, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=256,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(M11, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
         
         self.conv1 = nn.Conv1d(in_channels=1, out_channels=64, kernel_size=80, stride=4)
         self.pool1 = nn.MaxPool1d(kernel_size=4)
@@ -455,6 +563,15 @@ class M11(BaseAudioModel):
         self.pool5 = nn.AdaptiveAvgPool1d(1)
         self.flatten = nn.Flatten()
         self.flattenl = nn.Flatten()
+        self.bidirectional = bidirectional
+        lstm_input_dim = 512
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
 
         # Define heads
         self.base_feature_extractor = nn.Sequential(
@@ -477,17 +594,20 @@ class M11(BaseAudioModel):
         )
 
         self.disease_feature_extractor = nn.Sequential(
-            self.flatten, nn.Linear(512, 128),
-            nn.ReLU()
+            self.flatten
         )
 
         self.disease_head = nn.Sequential(
-            nn.Linear(128, num_disease_classes)
+            nn.Linear(512, 128),
+            nn.ReLU(), nn.Linear(128, num_disease_classes)
         )
 
 class M18(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(M18, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=256,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(M18, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
         
         self.conv1 = nn.Conv1d(in_channels=1, out_channels=64, kernel_size=80, stride=4)
         self.pool1 = nn.MaxPool1d(kernel_size=4)
@@ -513,6 +633,15 @@ class M18(BaseAudioModel):
         self.pool5 = nn.AdaptiveAvgPool1d(1)
         self.flatten = nn.Flatten()
         self.flattenl = nn.Flatten()
+        self.bidirectional = bidirectional
+        lstm_input_dim = 512
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
 
         # Define heads
         self.base_feature_extractor = nn.Sequential(
@@ -542,17 +671,20 @@ class M18(BaseAudioModel):
         )
 
         self.disease_feature_extractor = nn.Sequential(
-            self.flatten, nn.Linear(512, 128),
-            nn.ReLU()
+            self.flatten
         )
 
         self.disease_head = nn.Sequential(
-            nn.Linear(128, num_disease_classes)
+            nn.Linear(512, 128),
+            nn.ReLU(), nn.Linear(128, num_disease_classes)
         )
 
 class RawAudioCNN(BaseAudioModel):
-    def __init__(self, num_disease_classes=2, num_language_classes=2, sample_rate=16000, duration=10, lang_aware=True):
-        super(RawAudioCNN, self).__init__(num_disease_classes, num_language_classes, lang_aware)
+    def __init__(self, num_disease_classes=2, num_language_classes=2, 
+                 sample_rate=16000, duration=10, lstm_hidden=128,
+                 lstm_layers=2, bidirectional=True, lang_aware=True):
+        super(RawAudioCNN, self).__init__(num_disease_classes, num_language_classes, lstm_hidden,
+                                          lstm_layers, bidirectional, lang_aware)
         
         self.conv1 = nn.Conv1d(1, 64, kernel_size=80, stride=4)
         self.bn1 = nn.BatchNorm1d(64)
@@ -571,32 +703,44 @@ class RawAudioCNN(BaseAudioModel):
 
         self.relu = nn.ReLU()
 
+        self.bidirectional = bidirectional
+        lstm_input_dim = 256
+        lstm_output_dim = lstm_hidden * (2 if bidirectional else 1)
+
+        self.temporal_layer = nn.LSTM(
+            input_size=lstm_input_dim,
+            hidden_size=lstm_hidden,
+            num_layers=lstm_layers,
+            batch_first=True,
+            bidirectional=bidirectional
+        )
+
         # Define heads
         self.base_feature_extractor = nn.Sequential(
-            self.conv1, # self.bn1,
-            self.relu, self.pool1, self.dropout1,
-            self.conv2, # self.bn2,
+            self.conv1, #self.bn1,
+            self.relu, self.pool1, self.dropout1, self.conv2, #self.bn2,
             self.relu
         )
 
         self.language_head = nn.Sequential(
             nn.AdaptiveAvgPool1d(1),
             nn.Flatten(),
-            nn.Linear(128, num_language_classes)
+            nn.Linear(lstm_output_dim, 128),
+            nn.ReLU(), nn.Dropout(0.5),
+            nn.Linear(128, num_disease_classes)
         )
 
         self.disease_feature_extractor = nn.Sequential(
             self.pool2, self.dropout2,
-            self.conv3, # self.bn3,
+            self.conv3, #self.bn3,
             self.relu, self.pool3, self.dropout3,
             nn.AdaptiveAvgPool1d(1),
             nn.Flatten()
         )
 
         self.disease_head = nn.Sequential(
-            nn.Linear(256, 128),
-            nn.ReLU(),
-            nn.Dropout(0.5),
+            nn.Linear(lstm_output_dim, 128),
+            nn.ReLU(), nn.Dropout(0.5),
             nn.Linear(128, num_disease_classes)
         )
 
