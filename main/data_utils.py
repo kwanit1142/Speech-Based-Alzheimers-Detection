@@ -32,7 +32,8 @@ class Datasets(enum.Enum):
     ADRESS2k20 = "adress2k20"
     NCMMSC = "ncmmsc"
     IVANOVA = "ivanova"
-    MANDARIN_CHOU = "mchou" 
+    MANDARIN_CHOU = "mchou"
+    GREEK_SHORT = "gshort"
     ADRESS_SPEC = "adress_spec"
     NCMMSC_SPEC = "ncmmsc_spec"
 
@@ -46,44 +47,23 @@ class DimentiaDataset(Dataset):
         self.overlap_factor = overlap_factor
         self.lang_aware = lang_aware
 
-        self.audio_paths = []  
-        self.labels = []
-        self.languages = []
+        self.audio_paths = []   # [(audio_name, file_path), ...]
+        self.labels = []        # one label per file
+        self.languages = []     # one language per file
         
         self.sample_rate = 16000
     
-    def _add_audio_splits(self, audio_name, file_path, label, language=LanguageEnum.ENGLISH):
+    
+    def _add_audio_splits(self, audio_name, file_path, label, language):
         """
-        Create splits for a single audio file and add them to the dataset.
+        Register an audio file once (splits handled inside __getitem__).
         """
         try:
-            waveform, original_sr = librosa.load(file_path, sr=None, mono=True)
-            
-            if original_sr != self.sample_rate:
-                waveform = librosa.resample(waveform, orig_sr=original_sr, target_sr=self.sample_rate)
-            
-            total_duration = len(waveform) / self.sample_rate
-            
-            step_size = self.split_duration * (1 - self.overlap_factor)
-            
-            num_splits = math.ceil((total_duration - self.split_duration) / step_size) + 1
-            
-            for i in range(num_splits):
-                start_time = i * step_size
-                end_time = start_time + self.split_duration
-                
-                if end_time > total_duration:
-                    if total_duration > self.split_duration:
-                        start_time = total_duration - self.split_duration
-                        end_time = total_duration
-                    else:
-                        start_time = 0
-                        end_time = total_duration
-                
-                self.audio_paths.append((audio_name, file_path, start_time, end_time))
-                self.labels.append(label)
-                self.languages.append(language.value)
-                
+            # just store file-level info (not splits anymore)
+            self.audio_paths.append((audio_name, file_path))
+            self.labels.append(label)
+            self.languages.append(language.value)
+
         except Exception as e:
             print(f"Error processing file {file_path}: {e}")
     
@@ -91,31 +71,53 @@ class DimentiaDataset(Dataset):
         return len(self.audio_paths)
     
     def __getitem__(self, idx):
-        audio_name, file_path, start_time, end_time = self.audio_paths[idx]
+        audio_name, file_path = self.audio_paths[idx]
         label = self.labels[idx]
-        
+        language = self.languages[idx]
+
+        # load waveform
         waveform, original_sr = librosa.load(file_path, sr=None, mono=True)
-        
         if original_sr != self.sample_rate:
             waveform = librosa.resample(waveform, orig_sr=original_sr, target_sr=self.sample_rate)
 
-        start_sample = int(start_time * self.sample_rate)
-        end_sample = min(int(end_time * self.sample_rate), len(waveform))
-        
-        audio_segment = waveform[start_sample:end_sample]
-        
+        total_duration = len(waveform) / self.sample_rate
+        step_size = self.split_duration * (1 - self.overlap_factor)
+        num_splits = math.ceil((total_duration - self.split_duration) / step_size) + 1
+
+        chunks = []
         target_length = int(self.split_duration * self.sample_rate)
-        
-        if len(audio_segment) < target_length:
-            padding = np.zeros(target_length - len(audio_segment))
-            audio_segment = np.concatenate([audio_segment, padding])
-        elif len(audio_segment) > target_length:
-            audio_segment = audio_segment[:target_length]
-        
-        audio_tensor = torch.FloatTensor(audio_segment).unsqueeze(0) 
-        
+
+        for i in range(num_splits):
+            start_time = i * step_size
+            end_time = start_time + self.split_duration
+
+            if end_time > total_duration:
+                if total_duration > self.split_duration:
+                    start_time = total_duration - self.split_duration
+                    end_time = total_duration
+                else:
+                    start_time = 0
+                    end_time = total_duration
+
+            start_sample = int(start_time * self.sample_rate)
+            end_sample = min(int(end_time * self.sample_rate), len(waveform))
+            audio_segment = waveform[start_sample:end_sample]
+
+            # pad/trim
+            if len(audio_segment) < target_length:
+                padding = np.zeros(target_length - len(audio_segment))
+                audio_segment = np.concatenate([audio_segment, padding])
+            elif len(audio_segment) > target_length:
+                audio_segment = audio_segment[:target_length]
+
+            chunks.append(audio_segment)
+
+        # stack all chunks into tensor [Nc, 80k]
+        audio_tensor = torch.FloatTensor(np.stack(chunks, axis=0))
+
         if self.lang_aware:
-            return audio_tensor, (torch.tensor(label, dtype=torch.long), torch.tensor(self.languages[idx], dtype=torch.long))
+            return audio_tensor, (torch.tensor(label, dtype=torch.long),
+                                  torch.tensor(language, dtype=torch.long))
         return audio_tensor, torch.tensor(label, dtype=torch.long)
 
 
@@ -286,8 +288,9 @@ class MandarinChouDataset(DimentiaDataset):
                         audio_name = os.path.splitext(filename)[0]
                         self._add_audio_splits(audio_name, audio_path, class_label, self.language)
 
-class GreekDataset(DimentiaDataset):
+class GreekShortDataset(DimentiaDataset):
     """
+    28
     Dataset class for the NCMMSC dataset.
     0 - ProbableAD - MCI and AD
     1 - Control (Healthy)
@@ -296,35 +299,29 @@ class GreekDataset(DimentiaDataset):
         super().__init__(split_duration, overlap_factor, lang_aware)
         
         self.class_mapping = {
-            "MCI": 0, "HC": 1
+            "MCI": 2, "HC": 0, "AD": 1,
         }
 
-        self.language = LanguageEnum.MANDARIN
+        self.language = LanguageEnum.GREEK
 
-        self.base_dir = f"{DATA_DIR}/Greek/Dem@Care"
+        self.base_dir = f"{DATA_DIR}/Greek/Dem@Care/short"
 
         self.load_dataset()
 
 
     def load_dataset(self):
-        # for class_name, class_label in self.class_mapping.items():
-        #     class_dir = os.path.join(self.base_dir, class_name)
+        for class_name, class_label in self.class_mapping.items():
+            class_dir = os.path.join(self.base_dir, class_name)
             
-        #     if not os.path.isdir(class_dir):
-        #         print(f"Warning: Directory {class_dir} not found, skipping.")
-        #         continue
+            if not os.path.isdir(class_dir):
+                print(f"Warning: Directory {class_dir} not found, skipping.")
+                continue
             
-        #     for subdir in [sdir for sdir in os.scandir(class_dir) if sdir]:
-        #         for filename in os.listdir(class_dir):
-        #             if filename.endswith(('.wav', '.mp3', '.flac')):
-        #                 audio_path = os.path.join(class_dir, filename)
-        #                 audio_name = os.path.splitext(filename)[0]
-        #                 self._add_audio_splits(audio_name, audio_path, class_label, self.language)
-        """
-        Handle long, short directories before going for AD, HC, MCI 
-        """
-
-        pass
+            for filename in os.listdir(class_dir):
+                if filename.endswith(('.wav', '.mp3', '.flac')):
+                    audio_path = os.path.join(class_dir, filename)
+                    audio_name = os.path.splitext(filename)[0]
+                    self._add_audio_splits(audio_name, audio_path, class_label, self.language)
 
 class ADReSSSpectrogramDataset(Dataset):
     """
@@ -436,7 +433,23 @@ class NCMMSCSpectrogramDataset(Dataset):
 
         return img_tensor, torch.tensor(label, dtype=torch.long)
 
-def collate_with_augmentation(batch):
+def collate_with_augmentation_and_chunking(batch, mode="median", augment=True, sample_rate=16000):
+    def _adjust_single(audio_chunks: torch.Tensor, Nc_target: int) -> torch.Tensor:
+        Nc_raw, chunk_len = audio_chunks.shape
+
+        if Nc_raw == Nc_target:
+            return audio_chunks
+        elif Nc_raw < Nc_target:
+            idxs = np.linspace(0, Nc_raw - 1, Nc_target)
+            idxs_floor = np.floor(idxs).astype(int)
+            idxs_ceil = np.clip(idxs_floor + 1, 0, Nc_raw - 1)
+            alpha = torch.from_numpy((idxs - idxs_floor).astype(np.float32))
+            return (1 - alpha.unsqueeze(1)) * audio_chunks[idxs_floor] + \
+                   alpha.unsqueeze(1) * audio_chunks[idxs_ceil]
+        else:  # Nc_raw > Nc_target
+            idxs = np.sort(np.random.choice(Nc_raw, Nc_target, replace=False))
+            return audio_chunks[idxs]
+            
     train_aug = Compose([
             AddGaussianNoise(min_amplitude=0.001, max_amplitude=0.005, p=0.5),
             # TimeStretch(min_rate=0.95, max_rate=1.05, p=0.5),
@@ -447,13 +460,39 @@ def collate_with_augmentation(batch):
             # PolarityInversion(p=0.5),
             # HighPassFilter(min_cutoff_freq=200.0, max_cutoff_freq=400.0, p=0.5),
             # LowPassFilter(min_cutoff_freq=3000.0, max_cutoff_freq=6000.0, p=0.5),
-        ])
-    augmented_batch = []
-    for x, y in batch:
-        x_aug = train_aug(samples=x.squeeze().numpy(), sample_rate=16000)
-        x_aug = torch.FloatTensor(x_aug).unsqueeze(0)
-        augmented_batch.append((x_aug, y))
-    return torch.utils.data.default_collate(augmented_batch)    
+        ]) if augment else None
+    Nc_raw_list = [item[0].shape[0] for item in batch]
+
+    if mode == "min":
+        Nc_target = min(Nc_raw_list)
+    elif mode == "max":
+        Nc_target = max(Nc_raw_list)
+    elif mode == "median":
+        Nc_target = int(np.median(Nc_raw_list))
+    elif mode == "mean":
+        Nc_target = int(round(np.mean(Nc_raw_list)))
+    else:
+        raise ValueError("mode must be one of ['min','max','median','mean']")
+    batch_x, batch_y = [], []
+    for audio_chunks, label in batch:
+        # (1) Augmentation (applied on waveform level, not chunk-level)
+        if augment:
+            # Flatten to waveform
+            wav = audio_chunks.flatten().numpy()
+            wav_aug = train_aug(samples=wav, sample_rate=sample_rate)
+            # Reshape back into (Nc_raw, chunk_len)
+            audio_chunks = torch.from_numpy(wav_aug).float().reshape(audio_chunks.shape)
+
+        # (2) Adjust to Nc_target
+        adjusted = _adjust_single(audio_chunks, Nc_target)
+
+        batch_x.append(adjusted)
+        batch_y.append(label)
+
+    batch_x = torch.stack(batch_x, dim=0)  # (B, Nc_target, chunk_len)
+    batch_y = torch.tensor(batch_y)
+
+    return batch_x, batch_y    
  
 def get_dataloaders(dataset_name, batch_size=32, num_workers=4, lang_aware=False):
     """
@@ -471,6 +510,8 @@ def get_dataloaders(dataset_name, batch_size=32, num_workers=4, lang_aware=False
         dataset = NCMMSCDataset(lang_aware=lang_aware)
     elif dataset_name == Datasets.IVANOVA:
         dataset = SpanishIvanovaDataset(lang_aware=lang_aware)
+    elif dataset_name == Datasets.GREEK_SHORT:
+        dataset = GreekShortDataset(lang_aware=lang_aware)
     elif dataset_name == Datasets.MANDARIN_CHOU:
         dataset = MandarinChouDataset(lang_aware=lang_aware)
     else:
@@ -485,9 +526,15 @@ def get_dataloaders(dataset_name, batch_size=32, num_workers=4, lang_aware=False
         dataset, [train_size, val_size, test_size], generator=generator)
 
     dataloader = {
-        'train': DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers, collate_fn=collate_with_augmentation),
-        'val': DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers),
-        'test': DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+        'train': DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers,
+                            collate_fn=lambda b: collate_with_augmentation_and_chunking(b, mode="median", augment=False)),
+        'val': DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers,
+                          collate_fn=lambda b: collate_with_augmentation_and_chunking(b, mode="median", augment=False)),
+        'test': DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers,
+                           collate_fn=lambda b: collate_with_augmentation_and_chunking(b, mode="median", augment=False))
+        # 'train': DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers),
+        # 'val': DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers),
+        # 'test': DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
     }
     
     return dataloader
